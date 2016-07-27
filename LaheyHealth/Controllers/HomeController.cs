@@ -15,14 +15,14 @@ namespace LaheyHealth.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Start Page?";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Descriptino Message?";
 
             return View();
         }
