@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EA398751-8AE7-413E-A6B6-5B75EB52ACA5}</ProjectGuid>
+    <ProjectGuid>{47B232D7-AD96-45DE-A524-6D4B28D17068}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LaheyHealth.Tests</RootNamespace>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LaheyHealth\LaheyHealth.csproj">
-      <Project>{6F58BACD-0317-4378-8BEB-9C6BA6F54FF9}</Project>
+      <Project>{E41A7127-82DD-48E8-ACAA-8CB9EB7D2F57}</Project>
       <Name>LaheyHealth</Name>
     </ProjectReference>
   </ItemGroup>
