@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,8 @@ namespace LaheyHealth.Models
     public class Scores
     {
         private int id;
+        //Score is not required for now, this might change since we will 
+        //robably have the calculation made before it is inserted to the database.
         private int score;
         private Participant participant;
         private Language language;
@@ -17,37 +20,49 @@ namespace LaheyHealth.Models
         //To calculate result we need to get value for skill and importance and multiply them with each other
         private ImportanceValues importanceValues;
         private SkillValues skillValues;
+        //Question it is related to
+        private Item item;
 
+        [Required]
+
+        public Item Item
+        {
+            get { return item; }
+            set { item = value; }
+        }
+        
         public SkillValues SkillValues
         {
             get { return skillValues; }
             set { skillValues = value; }
         }
+        
 
         public ImportanceValues ImportanceValues
         {
             get { return importanceValues; }
             set { importanceValues = value; }
         }
-
+        
         public Subscale Subscale
         {
             get { return subscale; }
             set { subscale = value; }
         }
+        
 
         public Scale Scale
         {
             get { return scale; }
             set { scale = value; }
         }
+        
 
         public Language Language
         {
             get { return language; }
             set { language = value; }
         }
-
         public Participant Participant
         {
             get { return participant; }

@@ -197,23 +197,33 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportanceValuesController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ScalesController.cs" />
+    <Compile Include="Controllers\ScoresController.cs" />
+    <Compile Include="Controllers\SkillValuesController.cs" />
+    <Compile Include="Controllers\SubscalesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImportanceValues.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Paricipant.cs" />
-    <Compile Include="Models\Scales.cs" />
+    <Compile Include="Models\Participant.cs" />
+    <Compile Include="Models\Scale.cs" />
     <Compile Include="Models\Scores.cs" />
+    <Compile Include="Models\SistemContext.cs" />
     <Compile Include="Models\SkillValues.cs" />
     <Compile Include="Models\Subscale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ScaleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -275,6 +285,36 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Language\Create.cshtml" />
+    <Content Include="Views\Language\Delete.cshtml" />
+    <Content Include="Views\Language\Details.cshtml" />
+    <Content Include="Views\Language\Edit.cshtml" />
+    <Content Include="Views\Language\Index.cshtml" />
+    <Content Include="Views\ImportanceValues\Create.cshtml" />
+    <Content Include="Views\ImportanceValues\Delete.cshtml" />
+    <Content Include="Views\ImportanceValues\Details.cshtml" />
+    <Content Include="Views\ImportanceValues\Edit.cshtml" />
+    <Content Include="Views\ImportanceValues\Index.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\SkillValues\Create.cshtml" />
+    <Content Include="Views\SkillValues\Delete.cshtml" />
+    <Content Include="Views\SkillValues\Details.cshtml" />
+    <Content Include="Views\SkillValues\Edit.cshtml" />
+    <Content Include="Views\SkillValues\Index.cshtml" />
+    <Content Include="Views\Subscales\Create.cshtml" />
+    <Content Include="Views\Subscales\Delete.cshtml" />
+    <Content Include="Views\Subscales\Details.cshtml" />
+    <Content Include="Views\Subscales\Edit.cshtml" />
+    <Content Include="Views\Subscales\Index.cshtml" />
+    <Content Include="Views\Scales\Create.cshtml" />
+    <Content Include="Views\Scales\Delete.cshtml" />
+    <Content Include="Views\Scales\Details.cshtml" />
+    <Content Include="Views\Scales\Edit.cshtml" />
+    <Content Include="Views\Scales\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

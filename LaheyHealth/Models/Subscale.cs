@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +12,6 @@ namespace LaheyHealth.Models
         private String name;
         private Scale scale;
         private Language language;
-
         public Language Language
         {
             get { return language; }
@@ -23,6 +23,7 @@ namespace LaheyHealth.Models
             get { return scale; }
             set { scale = value; }
         }
+        [Required(ErrorMessage = "Name for Subscale is required")]
 
         public String Name
         {

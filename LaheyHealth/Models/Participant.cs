@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace LaheyHealth.Models
 {
+    //No need for error messages since Participants are not inserted from front end
     public class Participant
     {
         private int id;
@@ -12,7 +14,7 @@ namespace LaheyHealth.Models
         private DateTime startDt;
         private DateTime completedDt;
         private String ipAddress;
-
+        [Required]
         public String IPAdress
         {
             get { return ipAddress; }
@@ -31,7 +33,7 @@ namespace LaheyHealth.Models
             get { return startDt; }
             set { startDt = value; }
         }
-
+        [Required]
         public Language Language
         {
             get { return language; }
