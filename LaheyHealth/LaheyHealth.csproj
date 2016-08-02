@@ -223,7 +223,11 @@
     <Compile Include="Models\Subscale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ImportanceValuesViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ScaleViewModel.cs" />
+    <Compile Include="ViewModels\SkillValuesViewModel.cs" />
+    <Compile Include="ViewModels\SubscaleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

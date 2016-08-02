@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,9 +12,9 @@ namespace LaheyHealth.Models
         private int id;
         private String name;
         private Language language;
-
         
-        public Language Language
+        
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }

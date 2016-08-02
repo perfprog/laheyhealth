@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace LaheyHealth.ViewModels
 {
-    public class ScaleViewModel
+    public class SkillValuesViewModel
     {
-        private Scale scale;
+        private SkillValues skillValues;
         private SelectList languageList;
         private int langId;
 
@@ -25,26 +25,24 @@ namespace LaheyHealth.ViewModels
             get { return languageList; }
             set { languageList = value; }
         }
-        
-        public Scale Scale
+
+        public SkillValues SkillValues
         {
-            get { return scale; }
-            set { scale = value; }
+            get { return skillValues; }
+            set { skillValues = value; }
         }
 
-        //Load Languages to view on object creation
-        public ScaleViewModel() {
-            this.scale = new Scale();
+        public SkillValuesViewModel()
+        {
+            this.skillValues = new SkillValues();
+            //Load data for languages
             LoadLanguages();
         }
 
-        //Load languages onto select list
-        public void LoadLanguages() {
+        public void LoadLanguages()
+        {
             SistemContext db = new SistemContext();
             languageList = new SelectList(db.Language, "Id", "languageName");
-            db.Dispose();
         }
-        
-
     }
 }

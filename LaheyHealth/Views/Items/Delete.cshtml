@@ -20,6 +20,28 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Language.LanguageName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Scale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Scale.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscale.Name)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

@@ -9,29 +9,26 @@ namespace LaheyHealth.Models
     public class Item
     {
         private int id;
-        
         private String name;
         private Scale scale;
-        
         private Language language;
-        
         private Subscale subscale;
 
         [Required(ErrorMessage = "Subscale it pertains to is required")]
-        public Subscale Subscale
+        public virtual Subscale Subscale
         {
             get { return subscale; }
             set { subscale = value; }
         }
 
         [Required(ErrorMessage = "Language of item is required")]
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }
         }
         [Required(ErrorMessage = "Scale it pertains to is required")]
-        public Scale Scale
+        public virtual Scale Scale
         {
             get { return scale; }
             set { scale = value; }

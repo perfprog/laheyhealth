@@ -12,12 +12,14 @@ namespace LaheyHealth.Models
         private String languageName;
         private String culture;
         [Required(ErrorMessage = "Culture of language (ex: En-en) is required")]
+        
         public String Culture
         {
             get { return culture; }
             set { culture = value; }
         }
         [Required(ErrorMessage = "Name of language (ex: English) is required")]
+        [Display(Name = "Language")]
         public String LanguageName
         {
             get { return languageName; }

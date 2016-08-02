@@ -14,7 +14,7 @@ namespace LaheyHealth.Models
         private int value;
         private Language language;
         
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }

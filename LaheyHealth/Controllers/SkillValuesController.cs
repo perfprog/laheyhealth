@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaheyHealth.Models;
-
+using LaheyHealth.ViewModels;
 namespace LaheyHealth.Controllers
 {
     public class SkillValuesController : Controller
@@ -38,7 +38,7 @@ namespace LaheyHealth.Controllers
         // GET: SkillValues/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new SkillValuesViewModel());
         }
 
         // POST: SkillValues/Create
@@ -46,16 +46,30 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Value,Label,Type")] SkillValues skillValues)
+        public ActionResult Create(SkillValuesViewModel svm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.SkillValues.Add(skillValues);
+                //New connection
+                SistemContext db = new SistemContext();
+                //Find associated language
+                Language lang = db.Language.Find(svm.LangId);
+                //Create new skill value
+                SkillValues sv = new SkillValues();
+                //Get data
+                sv.Language = lang;
+                sv.Type = "Skill Value";
+                sv = svm.SkillValues;
+                //Store
                 db.SaveChanges();
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-
-            return View(skillValues);
+            catch (Exception)
+            {
+                Console.Write("Error craeteing Skill Values");
+            }
+            return View(svm);
         }
 
         // GET: SkillValues/Edit/5
@@ -70,7 +84,12 @@ namespace LaheyHealth.Controllers
             {
                 return HttpNotFound();
             }
-            return View(skillValues);
+            //Get data onto a Skill Values View 
+            SkillValuesViewModel svm = new SkillValuesViewModel();
+            svm.SkillValues = skillValues;
+            svm.LangId = skillValues.Language.Id;
+            //return skill values view class to view
+            return View(svm);
         }
 
         // POST: SkillValues/Edit/5
@@ -78,15 +97,31 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Value,Label,Type")] SkillValues skillValues)
+        public ActionResult Edit(SkillValuesViewModel svm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(skillValues).State = EntityState.Modified;
+                //Create new db connectino
+                SistemContext db = new SistemContext();
+                //Get skill value related to from database.
+                SkillValues sv = db.SkillValues.Find(svm.SkillValues.Id);
+                //Get language to be asigned to sv
+                Language lang = db.Language.Find(svm.LangId);
+                //Assign values to sv
+                sv = svm.SkillValues;
+                sv.Language = lang;
+                sv.Type = "Skill Value";
+                //Update db
                 db.SaveChanges();
+                //Close connection
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-            return View(skillValues);
+            catch (Exception)
+            {
+                Console.Write("Problem with edition of Skill value");
+            }
+            return View(svm);
         }
 
         // GET: SkillValues/Delete/5

@@ -18,7 +18,7 @@ namespace LaheyHealth.Models
         
         private Language language;
 
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }
@@ -28,7 +28,7 @@ namespace LaheyHealth.Models
         public int Value
         {
             get { return value; }
-            set { value = value; }
+            set { this.value = value; }
         }
         [Required(ErrorMessage = "Label is required")]
         public String Label

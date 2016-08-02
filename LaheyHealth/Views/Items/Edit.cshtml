@@ -27,6 +27,25 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Item.Language, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LangId, Model.LangList, new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Item.Scale, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ScaleId, Model.ScaleList, new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Item.Subscale, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SubScaleId, Model.SubScaleList, new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

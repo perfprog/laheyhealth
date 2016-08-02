@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaheyHealth.Models;
+using LaheyHealth.ViewModels;
 
 namespace LaheyHealth.Controllers
 {
@@ -38,7 +39,7 @@ namespace LaheyHealth.Controllers
         // GET: Subscales/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new SubscaleViewModel());
         }
 
         // POST: Subscales/Create
@@ -46,16 +47,29 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Subscale subscale)
+        public ActionResult Create(SubscaleViewModel svm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Subscale.Add(subscale);
+                //Craete new connection
+                SistemContext db = new SistemContext();
+                //Get scale and language
+                Language lang = db.Language.Find(svm.LangId);
+                Scale scale = db.Scale.Find(svm.ScaleId);
+                //Create new subscale and assign values to it
+                Subscale subScale = new Subscale();
+                subScale = svm.SubScale;
+                subScale.Scale = scale;
+                subScale.Language = lang;
+                //Store data and close connection
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Dispose();
             }
-
-            return View(subscale);
+            catch (Exception)
+            {
+                Console.Write("Error creating subscale");
+            }
+            return View(svm);
         }
 
         // GET: Subscales/Edit/5
@@ -70,7 +84,12 @@ namespace LaheyHealth.Controllers
             {
                 return HttpNotFound();
             }
-            return View(subscale);
+            //Assign values to subscale view model
+            SubscaleViewModel svm = new SubscaleViewModel();
+            svm.SubScale = subscale;
+            svm.LangId = subscale.Language.Id;
+            svm.ScaleId = subscale.Scale.Id;
+            return View(svm);
         }
 
         // POST: Subscales/Edit/5
@@ -78,15 +97,30 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Subscale subscale)
+        public ActionResult Edit(SubscaleViewModel svm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(subscale).State = EntityState.Modified;
+                //Create new context connection
+                SistemContext db = new SistemContext();
+                //Get susbscale to be edited as well as scale and language
+                Subscale subscale = db.Subscale.Find(svm.SubScale.Id);
+                Language lang = db.Language.Find(svm.LangId);
+                Scale scale = db.Scale.Find(svm.ScaleId);
+                //Asign new data to subscale
+                subscale = svm.SubScale;
+                subscale.Language = lang;
+                subscale.Scale = scale;
+                //Save changes and dispose connection
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Dispose();
             }
-            return View(subscale);
+            catch (Exception)
+            {
+                Console.Write("Edition of subscale is not working");
+            }
+
+            return View(svm);
         }
 
         // GET: Subscales/Delete/5

@@ -46,39 +46,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Scale scale)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Scale.Add(scale);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(scale);
-        }
-
-        // GET: Scales/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Scale scale = db.Scale.Find(id);
-            if (scale == null)
-            {
-                return HttpNotFound();
-            }
-            return View(scale);
-        }
-
-        // POST: Scales/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ViewModels.ScaleViewModel scaleViewModel)
+        public ActionResult Create(ScaleViewModel scaleViewModel)
         {
             try
             {
@@ -89,16 +57,78 @@ namespace LaheyHealth.Controllers
                 //Asign language to scale
                 scale = scaleViewModel.Scale;
                 scale.Language = lang;
+                var q = db.Scale.Where(m => m.Name.ToUpper() == scaleViewModel.Scale.Name.ToUpper()).SingleOrDefault();
+                if (q != null) {
+                    ModelState.AddModelError("Error", "This scale name already exists, you can't have two scales with the same name. Please enter a different name.");
+                    return View(scaleViewModel);
+                }
                 //Save scale
                 db.Scale.Add(scale);
                 db.SaveChanges();
-                return View(scale);
+                db.Dispose();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                Console.WriteLine("Problem storing Scale to database");
+                return View(new ScaleViewModel());
+            }
+        }
+
+        // GET: Scales/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var s = db.Scale.Where(m => m.Id == id).SingleOrDefault();
+            Scale scale = db.Scale.Find(id);
+            if (scale == null)
+            {
+                return HttpNotFound();
+            }
+            ScaleViewModel scaleView = new ScaleViewModel();
+            scaleView.Scale = scale;
+            scaleView.LangId = scale.Language.Id;
+            return View(scaleView);
+        }
+
+        // POST: Scales/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ScaleViewModel scaleViewModel)
+        {
+            try
+            {
+                //Get Language
+                SistemContext db = new SistemContext();
+                //Check if there isn't a scale with the same name
+                var q = db.Scale.Where(m => m.Name.ToUpper() == scaleViewModel.Scale.Name.ToUpper()).SingleOrDefault();
+                //Make sure you are not comparing against itself
+                Scale selfScale = db.Scale.Find(scaleViewModel.Scale.Id);
+                if (q != null && selfScale.Name != q.Name)
+                {
+                    ModelState.AddModelError("Error", "This scale name already exists, you can't have two scales with the same name. Please enter a different name.");
+                    return View(scaleViewModel);
+                }
+                db.Dispose();
+                SistemContext dbo = new SistemContext();
+                Language lang = dbo.Language.Find(scaleViewModel.LangId);
+                Scale scale = dbo.Scale.Find(scaleViewModel.Scale.Id);
+                scale.Language = lang;
+                scale = scaleViewModel.Scale;
+                dbo.SaveChanges();
+                dbo.Dispose();
+                return RedirectToAction("Index");
             }
             catch
             {
                 Console.WriteLine("Problem storing Scale to database");
             }
-            return View();
+            return View(scaleViewModel);
         }
 
         // GET: Scales/Delete/5
@@ -124,6 +154,7 @@ namespace LaheyHealth.Controllers
             Scale scale = db.Scale.Find(id);
             db.Scale.Remove(scale);
             db.SaveChanges();
+            db.Dispose();
             return RedirectToAction("Index");
         }
 

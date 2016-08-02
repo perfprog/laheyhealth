@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaheyHealth.Models;
+using LaheyHealth.ViewModels;
 
 namespace LaheyHealth.Controllers
 {
@@ -38,7 +39,7 @@ namespace LaheyHealth.Controllers
         // GET: ImportanceValues/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new ImportanceValuesViewModel());
         }
 
         // POST: ImportanceValues/Create
@@ -46,16 +47,26 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Value,Label,Type")] ImportanceValues importanceValues)
+        public ActionResult Create(ImportanceValuesViewModel importanceViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.ImportanceValues.Add(importanceValues);
+                ImportanceValues iv = new ImportanceValues();
+                importanceViewModel.ImportanceValues.Type = "Importance Value";
+                iv = importanceViewModel.ImportanceValues;
+                SistemContext db = new SistemContext();
+                Language lang = db.Language.Find(importanceViewModel.LangId);
+                iv.Language = lang;
+                db.ImportanceValues.Add(iv);
                 db.SaveChanges();
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-
-            return View(importanceValues);
+            catch
+            {
+                Console.Write("Error storing new IV");
+            }
+            return View(importanceViewModel);
         }
 
         // GET: ImportanceValues/Edit/5
@@ -70,7 +81,10 @@ namespace LaheyHealth.Controllers
             {
                 return HttpNotFound();
             }
-            return View(importanceValues);
+            ImportanceValuesViewModel ivvm = new ImportanceValuesViewModel();
+            ivvm.ImportanceValues = importanceValues;
+            ivvm.LangId = importanceValues.Language.Id;
+            return View(ivvm);
         }
 
         // POST: ImportanceValues/Edit/5
@@ -78,15 +92,37 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Value,Label,Type")] ImportanceValues importanceValues)
+        public ActionResult Edit(ImportanceValuesViewModel ivvm)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(importanceValues).State = EntityState.Modified;
+            try {
+                /*
+                 SistemContext dbo = new SistemContext();
+                Language lang = dbo.Language.Find(scaleViewModel.LangId);
+                Scale scale = dbo.Scale.Find(scaleViewModel.Scale.Id);
+                scale.Language = lang;
+                scale = scaleViewModel.Scale;
+                dbo.SaveChanges();
+                */
+
+                //Search for iv we are changing
+                SistemContext db = new SistemContext();
+                //Search for language changes
+                Language lang = db.Language.Find(ivvm.LangId);
+                ImportanceValues iv = db.ImportanceValues.Find(ivvm.ImportanceValues.Id);
+                //set changes
+                iv.Language = lang;
+                iv = ivvm.ImportanceValues;
+                iv.Type = "Importance Value";
+                //save changes
                 db.SaveChanges();
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-            return View(importanceValues);
+            catch
+            {
+                Console.WriteLine("Not working");
+            }
+            return View(ivvm);
         }
 
         // GET: ImportanceValues/Delete/5
@@ -112,6 +148,7 @@ namespace LaheyHealth.Controllers
             ImportanceValues importanceValues = db.ImportanceValues.Find(id);
             db.ImportanceValues.Remove(importanceValues);
             db.SaveChanges();
+            db.Dispose();
             return RedirectToAction("Index");
         }
 

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LaheyHealth.Models;
+using LaheyHealth.ViewModels;
 
 namespace LaheyHealth.Controllers
 {
@@ -38,7 +39,7 @@ namespace LaheyHealth.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new ItemViewModel());
         }
 
         // POST: Items/Create
@@ -46,16 +47,35 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Item item)
+        public ActionResult Create(ItemViewModel ivm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Item.Add(item);
+                //Open context
+                SistemContext db = new SistemContext();
+                //Find Language
+                Language lang = db.Language.Find(ivm.LangId);
+                //Find Scale
+                Scale scale = db.Scale.Find(ivm.ScaleId);
+                //Find Subscale
+                Subscale subScale = db.Subscale.Find(ivm.SubScaleId);
+                //New Item
+                Item item = new Item();
+                //Assign values
+                item.Language = lang;
+                item.Scale = scale;
+                item.Subscale = subScale;
+                //Save Changes
                 db.SaveChanges();
+                //Dispose conection
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-
-            return View(item);
+            catch
+            {
+                Console.Write("Problem storing new Item");
+            }
+            return View(ivm);
         }
 
         // GET: Items/Edit/5
@@ -66,11 +86,21 @@ namespace LaheyHealth.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Item item = db.Item.Find(id);
+            
             if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            //Create item view
+            ItemViewModel ivm = new ItemViewModel();
+            //Assign values
+            ivm.Item = item;
+            ivm.LangId = item.Language.Id;
+            ivm.ScaleId = item.Scale.Id;
+            ivm.SubScaleId = item.Subscale.Id;
+            db.Dispose();
+            //Return item view model to view
+            return View(ivm);
         }
 
         // POST: Items/Edit/5
@@ -78,15 +108,34 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Item item)
+        public ActionResult Edit(ItemViewModel ivm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(item).State = EntityState.Modified;
+                //Open new connection
+                SistemContext db = new SistemContext();
+                //Get item that is being updated
+                Item item = db.Item.Find(ivm.Item.Id);
+                //Get language being assigned
+                Language lang = db.Language.Find(ivm.LangId);
+                //Get scale being assigned
+                Scale scale = db.Scale.Find(ivm.ScaleId);
+                //Get subscale being assigned
+                Subscale subScale = db.Subscale.Find(ivm.SubScaleId);
+                //Assign new values to item
+                item = ivm.Item;
+                item.Language = lang;
+                item.Scale = scale;
+                item.Subscale = subScale;
                 db.SaveChanges();
+                db.Dispose();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            catch
+            {
+                Console.Write("Error editing Item");
+            }
+            return View(ivm);
         }
 
         // GET: Items/Delete/5
