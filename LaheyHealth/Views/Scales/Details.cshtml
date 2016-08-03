@@ -22,7 +22,13 @@
             @Html.DisplayNameFor(model => model.Language.LanguageName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Language.LanguageName)
+            @try { 
+                @Html.DisplayFor(model => model.Language.LanguageName)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </dd>
 
     </dl>

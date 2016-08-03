@@ -57,10 +57,11 @@ namespace LaheyHealth.Controllers
                 //Create new skill value
                 SkillValues sv = new SkillValues();
                 //Get data
+                sv = svm.SkillValues;
                 sv.Language = lang;
                 sv.Type = "Skill Value";
-                sv = svm.SkillValues;
                 //Store
+                db.SkillValues.Add(sv);
                 db.SaveChanges();
                 db.Dispose();
                 return RedirectToAction("Index");
@@ -87,7 +88,8 @@ namespace LaheyHealth.Controllers
             //Get data onto a Skill Values View 
             SkillValuesViewModel svm = new SkillValuesViewModel();
             svm.SkillValues = skillValues;
-            svm.LangId = skillValues.Language.Id;
+            if(skillValues.Language != null)
+                svm.LangId = skillValues.Language.Id;
             //return skill values view class to view
             return View(svm);
         }
@@ -108,7 +110,8 @@ namespace LaheyHealth.Controllers
                 //Get language to be asigned to sv
                 Language lang = db.Language.Find(svm.LangId);
                 //Assign values to sv
-                sv = svm.SkillValues;
+                sv.Label = svm.SkillValues.Label;
+                sv.Value = svm.SkillValues.Value;
                 sv.Language = lang;
                 sv.Type = "Skill Value";
                 //Update db

@@ -20,6 +20,7 @@ namespace LaheyHealth.Models
             set { language = value; }
         }
         [Required(ErrorMessage = "Name of Scale is required")]
+        [Display(Name = "Scale Name")]
         public String Name
         {
             get { return name; }

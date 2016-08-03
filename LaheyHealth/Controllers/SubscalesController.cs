@@ -62,8 +62,10 @@ namespace LaheyHealth.Controllers
                 subScale.Scale = scale;
                 subScale.Language = lang;
                 //Store data and close connection
+                db.Subscale.Add(subScale);
                 db.SaveChanges();
                 db.Dispose();
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
@@ -87,8 +89,10 @@ namespace LaheyHealth.Controllers
             //Assign values to subscale view model
             SubscaleViewModel svm = new SubscaleViewModel();
             svm.SubScale = subscale;
-            svm.LangId = subscale.Language.Id;
-            svm.ScaleId = subscale.Scale.Id;
+            if(subscale.Language!=null)
+                svm.LangId = subscale.Language.Id;
+            if(subscale.Scale!=null)
+                svm.ScaleId = subscale.Scale.Id;
             return View(svm);
         }
 
@@ -108,12 +112,14 @@ namespace LaheyHealth.Controllers
                 Language lang = db.Language.Find(svm.LangId);
                 Scale scale = db.Scale.Find(svm.ScaleId);
                 //Asign new data to subscale
-                subscale = svm.SubScale;
                 subscale.Language = lang;
                 subscale.Scale = scale;
+                subscale.Name = svm.SubScale.Name;
                 //Save changes and dispose connection
+                
                 db.SaveChanges();
                 db.Dispose();
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {

@@ -24,21 +24,39 @@
         </dt>
 
         <dd>
+            @try { 
             @Html.DisplayFor(model => model.Language.LanguageName)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Scale)
         </dt>
 
         <dd>
+            @try { 
             @Html.DisplayFor(model => model.Scale.Name)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Subscale)
         </dt>
 
         <dd>
+            @try { 
             @Html.DisplayFor(model => model.Subscale.Name)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </dd>
     </dl>
 </div>

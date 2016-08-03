@@ -90,7 +90,8 @@ namespace LaheyHealth.Controllers
             }
             ScaleViewModel scaleView = new ScaleViewModel();
             scaleView.Scale = scale;
-            scaleView.LangId = scale.Language.Id;
+            if(scale.Language!=null)
+                scaleView.LangId = scale.Language.Id;
             return View(scaleView);
         }
 
@@ -119,7 +120,7 @@ namespace LaheyHealth.Controllers
                 Language lang = dbo.Language.Find(scaleViewModel.LangId);
                 Scale scale = dbo.Scale.Find(scaleViewModel.Scale.Id);
                 scale.Language = lang;
-                scale = scaleViewModel.Scale;
+                scale.Name = scaleViewModel.Scale.Name;
                 dbo.SaveChanges();
                 dbo.Dispose();
                 return RedirectToAction("Index");

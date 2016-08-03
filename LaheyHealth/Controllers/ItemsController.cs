@@ -62,10 +62,12 @@ namespace LaheyHealth.Controllers
                 //New Item
                 Item item = new Item();
                 //Assign values
+                item = ivm.Item;
                 item.Language = lang;
                 item.Scale = scale;
                 item.Subscale = subScale;
                 //Save Changes
+                db.Item.Add(item);
                 db.SaveChanges();
                 //Dispose conection
                 db.Dispose();
@@ -95,9 +97,12 @@ namespace LaheyHealth.Controllers
             ItemViewModel ivm = new ItemViewModel();
             //Assign values
             ivm.Item = item;
-            ivm.LangId = item.Language.Id;
-            ivm.ScaleId = item.Scale.Id;
-            ivm.SubScaleId = item.Subscale.Id;
+            if(item.Language!=null)
+                ivm.LangId = item.Language.Id;
+            if(item.Scale!=null)
+                ivm.ScaleId = item.Scale.Id;
+            if(item.Subscale!=null)
+                ivm.SubScaleId = item.Subscale.Id;
             db.Dispose();
             //Return item view model to view
             return View(ivm);
@@ -123,7 +128,7 @@ namespace LaheyHealth.Controllers
                 //Get subscale being assigned
                 Subscale subScale = db.Subscale.Find(ivm.SubScaleId);
                 //Assign new values to item
-                item = ivm.Item;
+                item.Name = ivm.Item.Name;
                 item.Language = lang;
                 item.Scale = scale;
                 item.Subscale = subScale;

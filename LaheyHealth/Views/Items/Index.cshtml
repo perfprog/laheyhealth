@@ -16,15 +16,15 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Language)
+            @Html.DisplayNameFor(model => model.Language.LanguageName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Scale)
+            @Html.DisplayNameFor(model => model.Scale.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subscale)
+            @Html.DisplayNameFor(model => model.Subscale.Name)
         </th>
-        <th></th>
+        <th>Actions</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -33,18 +33,36 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
+            @try { 
             @Html.DisplayFor(modelItem => item.Language.LanguageName)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
+
         </td>
         <td>
+            @try { 
             @Html.DisplayFor(modelItem => item.Scale.Name)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </td>
         <td>
+            @try { 
             @Html.DisplayFor(modelItem => item.Subscale.Name)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
         </td>
     </tr>
 }

@@ -15,7 +15,14 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Language.LanguageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scale.Name)
+        </th>
+        <th>Actions</th>
+
     </tr>
 
 @foreach (var item in Model) {
@@ -24,9 +31,27 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
+            @try { 
+                @Html.DisplayFor(model => item.Language.LanguageName)
+            }
+            catch
+            {
+                <text>Null</text>
+            }
+        </td>
+
+        <td>
+            @try{
+                @Html.DisplayFor(model => item.Scale.Name)
+            }
+            catch
+            {
+            <text>Null</text>
+            }
+        </td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
         </td>
     </tr>
 }

@@ -12,19 +12,20 @@ namespace LaheyHealth.Models
         private String name;
         private Scale scale;
         private Language language;
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }
         }
 
-        public Scale Scale
+        public virtual Scale Scale
         {
             get { return scale; }
             set { scale = value; }
         }
         [Required(ErrorMessage = "Name for Subscale is required")]
 
+        [Display(Name = "Subscale Name")]
         public String Name
         {
             get { return name; }

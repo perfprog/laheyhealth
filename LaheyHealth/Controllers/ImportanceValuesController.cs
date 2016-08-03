@@ -83,7 +83,8 @@ namespace LaheyHealth.Controllers
             }
             ImportanceValuesViewModel ivvm = new ImportanceValuesViewModel();
             ivvm.ImportanceValues = importanceValues;
-            ivvm.LangId = importanceValues.Language.Id;
+            if(importanceValues.Language != null)
+                ivvm.LangId = importanceValues.Language.Id;
             return View(ivvm);
         }
 
@@ -95,15 +96,6 @@ namespace LaheyHealth.Controllers
         public ActionResult Edit(ImportanceValuesViewModel ivvm)
         {
             try {
-                /*
-                 SistemContext dbo = new SistemContext();
-                Language lang = dbo.Language.Find(scaleViewModel.LangId);
-                Scale scale = dbo.Scale.Find(scaleViewModel.Scale.Id);
-                scale.Language = lang;
-                scale = scaleViewModel.Scale;
-                dbo.SaveChanges();
-                */
-
                 //Search for iv we are changing
                 SistemContext db = new SistemContext();
                 //Search for language changes
@@ -112,6 +104,8 @@ namespace LaheyHealth.Controllers
                 //set changes
                 iv.Language = lang;
                 iv = ivvm.ImportanceValues;
+                iv.Label = ivvm.ImportanceValues.Label;
+                iv.Value = ivvm.ImportanceValues.Value;
                 iv.Type = "Importance Value";
                 //save changes
                 db.SaveChanges();
