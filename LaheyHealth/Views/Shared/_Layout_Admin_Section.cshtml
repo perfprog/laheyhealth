@@ -34,10 +34,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Lahey Health</p>
-        </footer>
+        <br>
+        @Html.Partial("_Footer")       
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -315,9 +315,11 @@
     <Content Include="Views\Scales\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_Admin_Section.cshtml" />
     <Content Include="Views\Home\AdminHome.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
