@@ -314,6 +314,7 @@
     <Content Include="Views\Scales\Edit.cshtml" />
     <Content Include="Views\Scales\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_Admin_Section.cshtml" />
+    <Content Include="Views\Home\AdminHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
