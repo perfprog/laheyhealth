@@ -2,16 +2,18 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_Admin_Section.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
 <h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Language</h4>
         <hr />
@@ -48,4 +50,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+}
+else
+{
+    <h2>You need to be logged in as administrator to view this page</h2>
 }
