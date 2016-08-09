@@ -34,7 +34,7 @@
         <!-- Get next four in the LstItems that relate to the scale-->
         @foreach (var item in Model.LstItems)
             {
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 itemArea">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 itemArea form-group">
                 <!-- Subscale of item -->
 
                 <h5 class="subscale">
@@ -66,10 +66,9 @@
                         <!-- Options to be selected-->
 
                                 <label class="btn btn-default btn-group-lg btn-block">
-                                    <input class="btn-block" type="radio" autocomplete="off">
+                                    <input class="btn-block" type="radio" autocomplete="off" name="@item.Id" value="@skill.Id">
                                     @Html.DisplayFor(skillItem => skill.Label)
                                 </label>
-                                
                             }
                         </div>
                     }
@@ -90,11 +89,9 @@
                             {
                                         <!-- these will be radio buttons, but for now we will just leave them as texts-->
                                 <label class="btn btn-default btn-group-lg btn-block">
-                                    <input class="btn-block" type="radio" autocomplete="off">
+                                    <input class="btn-block" type="radio" autocomplete="off" name="@item.Id" value="@importance.Id">
                                     @Html.DisplayFor(importanceItem => importance.Label)
                                 </label>
-                                            
-
                             }
                         </div>
                     }
