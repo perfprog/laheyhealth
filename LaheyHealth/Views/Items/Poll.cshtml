@@ -1,0 +1,79 @@
+﻿@model LaheyHealth.ViewModels.QuestionsViewModel
+
+@{
+    ViewBag.Title = "Poll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="row youAreHere">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>
+            Questionnaire
+        </h1>
+
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: 65%;">
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Loop through items and show polls acordingly -->
+<!-- Insert current scale -->
+<div class="row scale">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3>
+            @Html.DisplayFor(model => model.CurrentScale)
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Get next four in the LstItems that relate to the scale-->
+        @foreach (var item in Model.LstItems)
+            {
+            <!-- Subscale of item -->
+            <h2>
+                @Html.DisplayFor(modelItem => item.Subscale.Name)
+            </h2>
+            <!-- Item -->
+                    <p>
+                        <b>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </b>
+                        <br />
+                        <!-- check if skill list is not empty, if it isnt show the title and options -->
+                        @if (Model.LstSkill.Count > 0)
+                        {
+                            <!-- value type-->
+                            <div class="valueType">
+                                <b>Skill</b>
+                            </div>
+                        <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
+                            foreach (var skill in Model.LstSkill)
+                            {
+                                <!-- these will be radio buttons, but for now we will just leave them as texts-->
+                                @Html.DisplayFor(skillItem => skill.Label)<br>
+                            }         
+                        }
+                        <!-- check if importance list is not empty, if it isnt show the title and options -->
+                        @if (Model.LstSkill.Count > 0)
+                        {
+                            <!-- value type-->
+                            <div class="valueType">
+                                <b>Importance</b>
+                            </div>
+                        <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
+                            foreach (var importance in Model.LstImportance)
+                            {
+                                <!-- these will be radio buttons, but for now we will just leave them as texts-->
+                                @Html.DisplayFor(importanceItem => importance.Label)<br>
+                            }
+                        }
+                    </p>
+        }
+    </div>
+</div>
+

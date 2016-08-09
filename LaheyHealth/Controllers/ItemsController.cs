@@ -177,5 +177,34 @@ namespace LaheyHealth.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Get Poll
+        //This will receive the language in the future, as of now we simply set it inside the controller
+        [HttpGet, ActionName("Poll")]
+        public ActionResult Poll()
+        {
+            try {
+                SistemContext db = new SistemContext();
+                //Get the language that will be used to take the test
+                //For now it will always be english
+                Language lang = db.Language.Find(9);
+                //Create the user that will be taking the test
+                Participant p = new Participant();
+                p.IPAdress = "get ip";
+                p.Language = lang;
+                p.StartDt = DateTime.Now;
+                //Save new user to the database
+                db.SaveChanges();
+                db.Dispose();
+                //Create new questionViewController, this is what we will use to run through the test
+                QuestionsViewModel qvm = new QuestionsViewModel(p);
+                return View(qvm);  
+            }
+            catch
+            {
+                Console.WriteLine("Error getting the poll");
+            }
+            return View();   
+        }
     }
 }

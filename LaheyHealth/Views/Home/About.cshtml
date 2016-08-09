@@ -1,7 +1,87 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About the Lahey Health Survey";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Info about lahey, or do we just set information for login</p>
+<div class="row youAreHere">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>
+            Introduction
+        </h1>
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: 25%;">
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2>About the Lahey Health Survey:</h2>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <img class="img-responsive" src="~/images/sample_tables.jpg" alt="Sample tables"/>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <img class="img-responsive" src="~/images/sample_graph.jpg" alt="Sample graph"/>
+            </div>
+        </div>
+        <p>
+        The spider graph provides a breakdown of your 'Tudes score by area. The shaded band represents what we call the "Proceed with Caution" area. Based on our research, companies who score outside (higher than) the band are typically successful in their initiative. Scores that land within the band point to potential trouble areas and are those most likely to benefit from using this diagnostic tool to address them prior to undertaking the initiative.
+            <br><br>
+        If your experience does not conform to our overall results as described above and you would like to share your insights, please feel free to contact us at surveys@perfprog.com. We’d love to hear from you.
+        </p>
+    </div>
+    
+</div>
+
+<div class="row">
+    <br />
+    <div class="col-lg-offset-3 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <iframe class="embed-responsive-item  responsive-video" src="https://www.youtube.com/embed/7iniCFDJQO0" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <br />
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2>Predictive Power:</h2>
+        <p>
+            Now that you understand the methodology, you may want to use the survey as a diagnostic tool for an international expansion initiative you are currently undertaking or are planning.
+        </p>
+
+
+
+        <div class="well">
+            <p>
+                <b>
+                    <i>
+
+                        If you would like to improve the likelihood of success, ask yourself some questions about the ‘tudes in your organization:
+
+                    </i>
+                </b>
+            </p>
+            <ul>
+                <li>Atti<b>tude</b> — Does your company or division place a priority on global business expansion?</li>
+                <li>Apti<b>tude</b> — Do you have the right experiential resources to succeed abroad?</li>
+                <li>Magni<b>tude</b> — Do you have the ability to align the scale and scope of the overseas opportunity with your company's goals and capabilities? </li>
+                <li>Lati<b>tude</b> — Is there a willingness to adapt company policies and practices to the opportunity?</li>
+                <li>Recti<b>tude</b> — Are you prepared to work within the legal and ethical practices required for market success, while maintaining corporate compliance?</li>
+                <li>Exacti<b>tude</b> — Does your corporate culture tolerate ambiguity and uncertainty both with and without "the numbers"?</li>
+                <li>Forti<b>tude</b> — Is there a corporate commitment to global initiatives in general, even in the face of setbacks?</li>
+            </ul>
+        </div>
+        <p>
+            If you’re not convinced that the answer to each of the questions is a robust “Yes” or you’re unsure that your colleagues are all on board or you just believe your organization could benefit from identifying potential pitfalls, you can use the 'Tudes diagnostic pack.
+            <br><br>
+            Submit your group pack and we will score it and return it to you along with some possible corrective actions to consider before you undertake the next initiative.
+        </p>
+        <br><br>
+        
+        @Html.ActionLink("Take the Lahey Health Survey Now", "Poll", "Items", null, new { @class = "btn btn-success btn-lg" })
+    </div>
+</div>
+
+

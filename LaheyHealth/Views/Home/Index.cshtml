@@ -21,14 +21,14 @@
         <h2>Are you considering overseas expansion?</h2>
         <p>International expansion initiatives are often an essential part of a company’s growth strategy. And, most companies are meticulous in their analysis of the external conditions that await them abroad. Frequently overlooked however, are the internal barriers that can sabotage their venture before it has a chance to take off. We have developed the Lahey Health survey to capture data reflecting your perception of your organization’s preparedness regarding the fundamental internal areas.</p>
         <br>
-        <a href="#" class="btn btn-success btn-lg">Take the Lahey Health Survey Now</a>
         
+        @Html.ActionLink("Take the Lahey Health Survey Now", "Poll", "Items", null, new { @class = "btn btn-success btn-lg" })
         <p>
             <br>
             Upon completion of the 5 minute, 28 question (4 per tude) survey, you will see your score in a spider chart infographic. This will help you identify which “tudes” your organization did right as well as the “tudes that preclude,” so you can avoid them in the future. You can even email the results to yourself. Thanks for participating in our survey and sharing your information and experience. By doing so, you are contributing to ongoing academic research.
             <br>
             <br>
-            <a href="#" class="btn btn-success btn-lg">Learn about the Lahey Health Survey</a>
+            @Html.ActionLink("Learn about the Lahey Health Survey", "About", "Home", new { @class = "btn btn-success btn-lg" })
             <br>
         </p>
     </div>

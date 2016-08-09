@@ -225,6 +225,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ImportanceValuesViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\QuestionsViewModel.cs" />
     <Compile Include="ViewModels\ScaleViewModel.cs" />
     <Compile Include="ViewModels\SkillValuesViewModel.cs" />
     <Compile Include="ViewModels\SubscaleViewModel.cs" />
@@ -316,6 +317,7 @@
     <Content Include="Views\Shared\_Layout_Admin_Section.cshtml" />
     <Content Include="Views\Home\AdminHome.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Items\Poll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

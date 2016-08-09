@@ -69,3 +69,28 @@ h1{
 .btn{
     white-space:normal;
 }
+
+/*
+    Responsive video css
+*/
+
+@media only screen and (max-width: 1500px) {
+    .responsive-video{
+        width:560px;
+        height:305px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .responsive-video{
+        width:400px;
+        height:200px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive-video{
+        width:225px;
+        height:120px;
+    }
+}

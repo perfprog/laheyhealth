@@ -15,8 +15,6 @@ namespace LaheyHealth.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Start Page?";
-
             return View();
         }
 
@@ -28,15 +26,12 @@ namespace LaheyHealth.Controllers
                 return RedirectToAction("Login", "Account");
             }
             else { 
-                ViewBag.Message = "Administration page";
                 return View();
             }
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Description Message?";
-
             return View();
         }
     }
