@@ -94,3 +94,47 @@ h1{
         height:120px;
     }
 }
+
+.scale{
+    background-color:#4b4b4b;
+    color:#ffffff;
+    width:100%;
+    margin:0 auto;
+}
+
+.subscale{
+    color:#62bb46;
+    padding:25px 10px;
+    font-size:20px;
+}
+
+.item{
+    color:#4b4b4b;
+    padding-left:25px;
+    padding-bottom:10px;
+    margin-bottom:0px;
+    font-size:20px;
+}
+
+
+.value{
+    padding-left:35px;
+}
+
+
+.valueType{
+    font-size:25px;
+}
+
+.itemArea{
+    border:1px solid #d1d1d1;
+    
+    width:97.5%;
+    margin: 0 auto;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

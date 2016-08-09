@@ -79,4 +79,3 @@ C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth\bin\Mic
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth\obj\Debug\LaheyHealth.dll
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth\obj\Debug\LaheyHealth.pdb
-C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth\obj\Debug\LaheyHealth.csprojResolveAssemblyReference.cache

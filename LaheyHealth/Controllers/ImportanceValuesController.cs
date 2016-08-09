@@ -52,11 +52,23 @@ namespace LaheyHealth.Controllers
             try
             {
                 ImportanceValues iv = new ImportanceValues();
-                importanceViewModel.ImportanceValues.Type = "Importance Value";
+                
                 iv = importanceViewModel.ImportanceValues;
                 SistemContext db = new SistemContext();
                 Language lang = db.Language.Find(importanceViewModel.LangId);
                 iv.Language = lang;
+                if(lang != null)
+                {
+                    if (lang.LanguageName == "English")
+                    {
+                        importanceViewModel.ImportanceValues.Type = "Importance";
+                    }
+                    if(lang.LanguageName == "Español")
+                    {
+                        importanceViewModel.ImportanceValues.Type = "Importancia";
+                    }
+                }
+                
                 db.ImportanceValues.Add(iv);
                 db.SaveChanges();
                 db.Dispose();
@@ -103,10 +115,15 @@ namespace LaheyHealth.Controllers
                 ImportanceValues iv = db.ImportanceValues.Find(ivvm.ImportanceValues.Id);
                 //set changes
                 iv.Language = lang;
-                iv = ivvm.ImportanceValues;
                 iv.Label = ivvm.ImportanceValues.Label;
                 iv.Value = ivvm.ImportanceValues.Value;
-                iv.Type = "Importance Value";
+                if(lang != null)
+                {
+                    if (lang.LanguageName == "English")
+                    {
+                        iv.Type = "Importance";
+                    }
+                }
                 //save changes
                 db.SaveChanges();
                 db.Dispose();

@@ -27,7 +27,27 @@ namespace LaheyHealth.ViewModels
         
         //Importance values to be asked
         private List<ImportanceValues> lstImportance = new List<ImportanceValues>();
-        
+
+        //Stores type for Skill Values to show on view (gets updated depending on language)
+        private string skillType;
+        //Stores type for Importance Values to show on view (gets updated depending on language)
+        private string importanceType;
+
+        public string ImportanceType
+        {
+            get { return importanceType; }
+            set { importanceType = value; }
+        }
+
+
+        public string SkillType
+        {
+            get { return skillType; }
+            set { skillType = value; }
+        }
+
+
+
         //Getters and setters
         #region
         public List<SkillValues> LstSkill
@@ -97,6 +117,18 @@ namespace LaheyHealth.ViewModels
             lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
             //Selec importance lists that users need to answe for the language that was selected
             lstImportance = db.ImportanceValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
+
+            //If lstSkill is not empty we set the value for its type so we can show it on the view
+            //Done this way to automatically get language
+            if (lstSkill.Count > 0)
+                skillType = lstSkill[0].Type;
+            //if lstImportance is not empty we set the value for its type so we can show it on the view
+            //Done this way to automatically get language
+            if(lstImportance.Count > 0)
+            {
+                importanceType = lstImportance[0].Type;
+            }
+
         }
 
         /*

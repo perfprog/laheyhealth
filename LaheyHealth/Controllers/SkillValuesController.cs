@@ -59,7 +59,11 @@ namespace LaheyHealth.Controllers
                 //Get data
                 sv = svm.SkillValues;
                 sv.Language = lang;
-                sv.Type = "Skill Value";
+                if(lang != null) { 
+                    if (lang.LanguageName == "English") { 
+                        sv.Type = "Skill";
+                    }
+                }
                 //Store
                 db.SkillValues.Add(sv);
                 db.SaveChanges();
@@ -113,7 +117,13 @@ namespace LaheyHealth.Controllers
                 sv.Label = svm.SkillValues.Label;
                 sv.Value = svm.SkillValues.Value;
                 sv.Language = lang;
-                sv.Type = "Skill Value";
+                if (lang != null)
+                {
+                    if (lang.LanguageName == "English")
+                    {
+                        sv.Type = "Skill";
+                    }
+                }
                 //Update db
                 db.SaveChanges();
                 //Close connection
@@ -122,7 +132,7 @@ namespace LaheyHealth.Controllers
             }
             catch (Exception)
             {
-                Console.Write("Problem with edition of Skill value");
+                Console.Write("Problem with edition of Skill");
             }
             return View(svm);
         }

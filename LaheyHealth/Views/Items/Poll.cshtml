@@ -30,50 +30,86 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    
         <!-- Get next four in the LstItems that relate to the scale-->
         @foreach (var item in Model.LstItems)
             {
-            <!-- Subscale of item -->
-            <h2>
-                @Html.DisplayFor(modelItem => item.Subscale.Name)
-            </h2>
-            <!-- Item -->
-                    <p>
-                        <b>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </b>
-                        <br />
-                        <!-- check if skill list is not empty, if it isnt show the title and options -->
-                        @if (Model.LstSkill.Count > 0)
-                        {
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 itemArea">
+                <!-- Subscale of item -->
+
+                <h5 class="subscale">
+                    @Html.DisplayFor(modelItem => item.Subscale.Name)
+                </h5>
+                <!-- Item -->
+                <p class="well item">
+                    <b>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </b>
+                </p>
+                <p>
+                    <br />
+                    <!-- check if skill list is not empty, if it isnt show the title and options -->
+                    @if (Model.LstSkill.Count > 0)
+                {
                             <!-- value type-->
-                            <div class="valueType">
-                                <b>Skill</b>
-                            </div>
+                        <div class="valueType">
+                            <hr />
+                            <b>
+                                @Html.DisplayFor(skillType => Model.SkillType)
+                            </b>
+                            <hr />
+                        </div>
                         <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
-                            foreach (var skill in Model.LstSkill)
+                        <div class="btn-group btn-block" data-toggle="buttons">
+                            @foreach (var skill in Model.LstSkill)
                             {
-                                <!-- these will be radio buttons, but for now we will just leave them as texts-->
-                                @Html.DisplayFor(skillItem => skill.Label)<br>
-                            }         
-                        }
-                        <!-- check if importance list is not empty, if it isnt show the title and options -->
-                        @if (Model.LstSkill.Count > 0)
-                        {
-                            <!-- value type-->
-                            <div class="valueType">
-                                <b>Importance</b>
-                            </div>
-                        <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
-                            foreach (var importance in Model.LstImportance)
-                            {
-                                <!-- these will be radio buttons, but for now we will just leave them as texts-->
-                                @Html.DisplayFor(importanceItem => importance.Label)<br>
+                        <!-- Options to be selected-->
+
+                                <label class="btn btn-default btn-group-lg btn-block">
+                                    <input class="btn-block" type="radio" autocomplete="off">
+                                    @Html.DisplayFor(skillItem => skill.Label)
+                                </label>
+                                
                             }
-                        }
-                    </p>
+                        </div>
+                    }
+                    <!-- check if importance list is not empty, if it isnt show the title and options -->
+                    @if (Model.LstImportance.Count > 0)
+                    {
+                            <!-- value type-->
+                        <div class="valueType">
+                            <hr />
+                            <b>
+                                @Html.DisplayFor(skillType => Model.ImportanceType)
+                            </b>
+                            <hr />
+                        </div>
+                        <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
+                        <div class="btn-group btn-block" data-toggle="buttons">
+                            @foreach (var importance in Model.LstImportance)
+                            {
+                                        <!-- these will be radio buttons, but for now we will just leave them as texts-->
+                                <label class="btn btn-default btn-group-lg btn-block">
+                                    <input class="btn-block" type="radio" autocomplete="off">
+                                    @Html.DisplayFor(importanceItem => importance.Label)
+                                </label>
+                                            
+
+                            }
+                        </div>
+                    }
+                </p>
+            </div>
         }
+        
+        
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <a class="btn btn-primary btn-block" href="#">
+            Next
+        </a>
     </div>
 </div>
 
