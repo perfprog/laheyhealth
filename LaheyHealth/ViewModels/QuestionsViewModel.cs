@@ -24,14 +24,22 @@ namespace LaheyHealth.ViewModels
         private string currentScale;
         //Skill values to be asked
         private List<SkillValues>  lstSkill = new List<SkillValues>();
-        
         //Importance values to be asked
         private List<ImportanceValues> lstImportance = new List<ImportanceValues>();
-
         //Stores type for Skill Values to show on view (gets updated depending on language)
         private string skillType;
         //Stores type for Importance Values to show on view (gets updated depending on language)
         private string importanceType;
+        //Stores a boolean that informs us if the poll has been finished or not
+        //Is used to show different button on view so users can go ahead and go to the results page
+        private bool finished;
+
+        public bool Finished
+        {
+            get { return finished; }
+            set { finished = value; }
+        }
+
 
         public string ImportanceType
         {
@@ -128,7 +136,7 @@ namespace LaheyHealth.ViewModels
             {
                 importanceType = lstImportance[0].Type;
             }
-
+            this.finished = false;
         }
 
         /*
