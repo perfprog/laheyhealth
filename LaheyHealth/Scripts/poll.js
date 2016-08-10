@@ -1,17 +1,13 @@
-﻿var answers = [];
+﻿//Class that keeps information stored for the answers 
+//(pushed into answers array after populated if the answer is not already 
+//in there and is not the same)
+var answers = [];
 $(document).ready(function () {
     $('.answer').unbind("click");
     //Array that will store answers to be sent via ajax to post method in item controller
-    
-    //Class that keeps information stored for the answers 
-    //(pushed into answers array after populated if the answer is not already 
-    //in there and is not the same)
-    var item = {};
-    item.id = 0;  //Id of item object that is being answered
-    item.IdSelectedSkill = 0;  // Id of skill value selected
-    item.IdSelectedImportance = 0; // Id of Importance value selected
+    $('#next').unbind("click");
 
-    
+
     //Get selected answer
     $('.answer').on("click", function () {
         var selected = $(this);
@@ -44,8 +40,9 @@ $(document).ready(function () {
                 create_insert_item("Importance", itemId, valueTypeId,answers)
         }
 
-        console.log(answers);
     })
+
+    $("#next").on("click", insertAnswers);
 });
 
 //Returns item if it is inside of answers array
@@ -78,8 +75,12 @@ function create_insert_item(typeValue, itemId, create_insert_item, answers) {
     answers.push(item);
 }
 
-
-
+//Ajax method that sends answers in for user
+function insertAnswers() {
+    alert("need to insert answers");
+    console.log("answers to be inserted:");
+    console.log(answers);
+}
 
 
 /*************************************

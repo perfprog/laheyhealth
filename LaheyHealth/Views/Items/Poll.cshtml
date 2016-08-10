@@ -118,12 +118,10 @@
         <!-- If poll is not finished yet show next button-->
         @if (Model.Finished == false)
         {
-        <a class="btn btn-primary btn-block" href="#" id="next">
-            <h3>Next</h3>
-        </a>
+        <a class="btn btn-primary btn-block" href="#" id="next"><h3>Next</h3></a>
         }
-        <!-- If poll is finished show button to go to results view -->
         else {
+            <!-- If poll is finished show button to go to results view -->
             <a class="btn btn-primary btn-block" href="#">View Results</a>
         }
     </div>
