@@ -190,14 +190,21 @@ namespace LaheyHealth.Controllers
                 Language lang = db.Language.Find(9);
                 //Create the user that will be taking the test
                 Participant p = new Participant();
-                p.IPAdress = "get ip";
+                p.IPAdress = Request.UserHostAddress;
                 p.Language = lang;
-                p.StartDt = DateTime.Now;
+                p.StartDt =DateTime.Now;
+                //Start the poll as not finished, this value will change when the poll is finished
+                p.Finished = false;
+                p.CompleteDt = DateTime.Now;
                 //Save new user to the database
+                db.Participant.Add(p);
                 db.SaveChanges();
-                db.Dispose();
+                //Save value of participant id to session variable, will be used throughout the application
+                System.Web.HttpContext.Current.Session["participantId"] = p.Id;
+
                 //Create new questionViewController, this is what we will use to run through the test
                 QuestionsViewModel qvm = new QuestionsViewModel(p);
+                System.Web.HttpContext.Current.Session["qvm"] = qvm;
                 return View(qvm);  
             }
             catch
@@ -206,5 +213,68 @@ namespace LaheyHealth.Controllers
             }
             return View();   
         }
+
+        //Post Poll
+        //Gets data from ajax call in poll, inserts value and updates the view to show new questions
+        [HttpPost, ActionName("Poll")]
+        public ActionResult Poll(List<AnswerAux> answers)
+        {
+            var p = answers;
+            //Check if answers list is null
+            if (answers != null)
+                //Check if all items have a value type
+
+                //Store answers
+                foreach (var item in answers)
+                {
+                    //Create new score to be inserted
+                    try
+                    {
+                        SistemContext dbo = new SistemContext();
+                        Scores scoreInsert = new Scores();
+                        scoreInsert.ImportanceValues = dbo.ImportanceValues.Find(item.IdSelectedImportance);
+                        scoreInsert.SkillValues = dbo.SkillValues.Find(item.IdSelectedSkill);
+                        scoreInsert.Item = dbo.Item.Find(item.Id);
+                        //We get language, scale and subscale from the item
+                        scoreInsert.Language = dbo.Language.Find(scoreInsert.Item.Language.Id);
+                        scoreInsert.Scale = dbo.Scale.Find(scoreInsert.Item.Scale.Id);
+                        scoreInsert.Subscale = dbo.Subscale.Find(scoreInsert.Item.Subscale.Id);
+                        //Get the Participant id from session variable
+                        var partIcipantId = System.Web.HttpContext.Current.Session["participantId"];
+                        scoreInsert.Participant = dbo.Participant.Find(System.Web.HttpContext.Current.Session["participantId"]);
+                        //Before we insert the score we calculate the actual score
+                        //To calculate the score we multiply the values for all value types selected
+                        scoreInsert.Score = scoreInsert.SkillValues.Value * scoreInsert.ImportanceValues.Value;
+                        dbo.Scores.Add(scoreInsert);
+                        dbo.SaveChanges();
+                        dbo.Dispose();
+                    }
+                    catch {
+                        Console.Write("error inserting values to the database");
+                    }
+                    //Once the data is inserted into the database we check if the user finished with the poll 
+                    QuestionsViewModel qvm = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
+                    qvm.changeSubscale();
+                    //Check if the poll is finished
+                    if (!qvm.Finished)
+                    {
+                        qvm.updateItems();
+                    }
+                    else {
+                        
+                    }
+                    
+                }
+
+            else {
+                Console.WriteLine("This will be changed for return of error to screen");
+            }
+
+            Console.Write(p);
+
+            //Either reload view with errors or redirect to new view
+            return Redirect("Index");
+        }
+    
     }
 }

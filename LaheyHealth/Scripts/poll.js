@@ -20,10 +20,10 @@ $(document).ready(function () {
         if (valueTypeLabel == "Skill") {
             //Perform insertion of information for skill value input
             //Check if the item exists in the array of answers
-            var item = getItemFromArray(itemId,answers);
-            if (item != null)
+            var AnswerAux = getItemFromArray(itemId,answers);
+            if (AnswerAux != null)
                 //Update answer 
-                item.IdSelectedSkill = valueTypeId;
+                AnswerAux.IdSelectedSkill = valueTypeId;
             else
                 //Insert new item
                 create_insert_item("Skill",itemId,valueTypeId,answers)
@@ -31,10 +31,10 @@ $(document).ready(function () {
         if (valueTypeLabel == "Importance") {
             //Perform insertion of information for importance value input
             //Check if the item exists on the array of answers
-            var item = getItemFromArray(itemId,answers);
-            if (item  != null)
+            var AnswerAux = getItemFromArray(itemId,answers);
+            if (AnswerAux  != null)
                 //Update answer
-                item.IdSelectedImportance = valueTypeId;
+                AnswerAux.IdSelectedImportance = valueTypeId;
             else
                 //Insert new item
                 create_insert_item("Importance", itemId, valueTypeId,answers)
@@ -51,7 +51,7 @@ function getItemFromArray(itemId,anwers) {
     var item = null;
     var i = 0;
     while (!itemExists && i < answers.length) {
-        if (answers[i].id == itemId) {
+        if (answers[i].Id == itemId) {
             itemExists = true;
             item = answers[i];
         }
@@ -65,21 +65,37 @@ function getItemFromArray(itemId,anwers) {
 //Items only come in here if they don't exist in the array of answers
 function create_insert_item(typeValue, itemId, create_insert_item, answers) {
     //Creating new item to be inserted in answers
-    var item = {};
-    item.id = itemId;  //Id of item object that is being answered
+    var AnswerAux = {};
+    AnswerAux.Id = itemId;  //Id of item object that is being answered
     if(typeValue == "Skill")
-        item.IdSelectedSkill = create_insert_item;  // Id of skill value selected
+        AnswerAux.IdSelectedSkill = create_insert_item;  // Id of skill value selected
     if(typeValue == "Importance")
-        item.IdSelectedImportance = create_insert_item; // Id of Importance value selected
+        AnswerAux.IdSelectedImportance = create_insert_item; // Id of Importance value selected
     //Push new item with answers onto array
-    answers.push(item);
+    answers.push(AnswerAux);
 }
 
 //Ajax method that sends answers in for user
-function insertAnswers() {
-    alert("need to insert answers");
-    console.log("answers to be inserted:");
+function insertAnswers(e) {
+    e.preventDefault();
     console.log(answers);
+    answers = JSON.stringify({ answers });
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "Poll",
+        datatype: "json",
+        traditional: true,
+        data: answers,
+        success: function (data) {
+            console.log("Success: " + data);
+        },
+        error: function (error) {
+            console.log("Error:" + error);
+        }
+    });
+    
+
 }
 
 

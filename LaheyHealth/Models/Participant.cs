@@ -14,6 +14,16 @@ namespace LaheyHealth.Models
         private DateTime startDt;
         private DateTime completedDt;
         private String ipAddress;
+        private bool finished;
+
+        public bool Finished
+        {
+            get { return finished; }
+            set { finished = value; }
+        }
+
+
+
         [Required]
         public String IPAdress
         {
@@ -21,11 +31,11 @@ namespace LaheyHealth.Models
             set { ipAddress = value; }
         }
 
-
-        public DateTime CompleteDt
+        //Value should not be considered untill poll is marked as finished in boolean finished
+        public DateTime? CompleteDt
         {
             get { return completedDt; }
-            set { completedDt = value; }
+            set { completedDt = (DateTime)value; }
         }
 
         public DateTime StartDt
@@ -34,19 +44,18 @@ namespace LaheyHealth.Models
             set { startDt = value; }
         }
         [Required]
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }
         }
-
-
 
         public int Id
         {
             get { return id; }
             set { id = value; }
         }
+        
 
         //Method used to send e-mail - doesn't store e-mail not to deal with privacy issues
         //Returns boolean that informs if e-mail was sent correctly

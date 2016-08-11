@@ -25,45 +25,45 @@ namespace LaheyHealth.Models
 
         [Required]
 
-        public Item Item
+        public virtual Item Item
         {
             get { return item; }
             set { item = value; }
         }
         
-        public SkillValues SkillValues
+        public virtual SkillValues SkillValues
         {
             get { return skillValues; }
             set { skillValues = value; }
         }
         
 
-        public ImportanceValues ImportanceValues
+        public virtual ImportanceValues ImportanceValues
         {
             get { return importanceValues; }
             set { importanceValues = value; }
         }
         
-        public Subscale Subscale
+        public virtual Subscale Subscale
         {
             get { return subscale; }
             set { subscale = value; }
         }
         
 
-        public Scale Scale
+        public virtual Scale Scale
         {
             get { return scale; }
             set { scale = value; }
         }
         
 
-        public Language Language
+        public virtual Language Language
         {
             get { return language; }
             set { language = value; }
         }
-        public Participant Participant
+        public virtual Participant Participant
         {
             get { return participant; }
             set { participant = value; }

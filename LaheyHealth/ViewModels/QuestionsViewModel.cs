@@ -22,6 +22,8 @@ namespace LaheyHealth.ViewModels
         private int lastInsertedAnswer;
         //Stores current scale, needs to be changed
         private string currentScale;
+        //Current Subscale index we use this to know how many subscales need to be answered to finish up the poll
+        public int currentSubscaleIndex { get; set; }
         //Skill values to be asked
         private List<SkillValues>  lstSkill = new List<SkillValues>();
         //Importance values to be asked
@@ -33,6 +35,16 @@ namespace LaheyHealth.ViewModels
         //Stores a boolean that informs us if the poll has been finished or not
         //Is used to show different button on view so users can go ahead and go to the results page
         private bool finished;
+        private List<Subscale> lstSubscale = new List<Subscale>();
+
+        public List<Subscale> LstSubscale
+        {
+            get { return lstSubscale; }
+            set { lstSubscale = value; }
+        }
+
+
+        public int currentScaleInt { get; set; }
 
         public bool Finished
         {
@@ -115,12 +127,23 @@ namespace LaheyHealth.ViewModels
         public void LoadData(Language lang)
         {
             SistemContext db = new SistemContext();
-            var items = db.Item.Where(m => m.Language.Id == lang.Id).OrderBy(m=> m.Scale.Id).ToList();
-            lstItems = items;
-            totalAmmount = items.Count();
-            currentQuestion = 0;
+            //We will get items in a different manner
+            //var items = db.Item.Where(m => m.Language.Id == lang.Id).OrderBy(m=> m.Scale.Id).ToList();
+            //Get subscales asociated to the language and order them by scale
+            var lstSubscales = db.Subscale.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Scale.Id).ToList();
+            //Store lst of subscale that we will be working on
+            this.LstSubscale = lstSubscales;
+            //Get the ammount of subscales that need to be answered
+            totalAmmount = this.LstSubscale.Count();
+            //Set the first items to be answered (we will be getting them by subscale id)
+            int subScaleId = LstSubscale[0].Id;
+            this.currentSubscaleIndex = 0;
+            var items = db.Item.Where(m => m.Subscale.Id == subScaleId).ToList();
+            LstItems = items;
+            currentScaleInt = 0;
             //Set the current scale the first one that we are going to work in
-            currentScale = lstItems[CurrentQuestion].Scale.Name;
+            currentScale = LstItems[currentScaleInt].Scale.Name;
+            
             //Select Skill lists  that users need to answer for the language that was selected
             lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
             //Selec importance lists that users need to answe for the language that was selected
@@ -137,6 +160,30 @@ namespace LaheyHealth.ViewModels
                 importanceType = lstImportance[0].Type;
             }
             this.finished = false;
+        }
+
+        //Change subscale we are working on
+        internal void changeSubscale()
+        {
+            //Add value to index of current scale
+            this.currentSubscaleIndex++;
+            //If land outside the lstsubscale count then the poll is finished
+            if (currentSubscaleIndex >= LstSubscale.Count()) {
+                this.finished = true;
+            }
+            //If the poll is not finished update items that will be shown
+            if (!this.finished)
+                this.updateItems();
+        }
+        //Update current scale and items
+        internal void updateItems()
+        {
+            SistemContext dbo = new SistemContext();
+            //Get subscale we are working on
+            int subscaleInt = this.lstSubscale[this.currentSubscaleIndex].Id;
+            //Get items associated to this scale
+            var q = dbo.Item.Where(item => item.Subscale.Id == subscaleInt).ToList();
+            lstItems = q;
         }
 
         /*
