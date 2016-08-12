@@ -184,28 +184,35 @@ namespace LaheyHealth.Controllers
         public ActionResult Poll()
         {
             try {
-                SistemContext db = new SistemContext();
-                //Get the language that will be used to take the test
-                //For now it will always be english
-                Language lang = db.Language.Find(9);
-                //Create the user that will be taking the test
-                Participant p = new Participant();
-                p.IPAdress = Request.UserHostAddress;
-                p.Language = lang;
-                p.StartDt =DateTime.Now;
-                //Start the poll as not finished, this value will change when the poll is finished
-                p.Finished = false;
-                p.CompleteDt = DateTime.Now;
-                //Save new user to the database
-                db.Participant.Add(p);
-                db.SaveChanges();
-                //Save value of participant id to session variable, will be used throughout the application
-                System.Web.HttpContext.Current.Session["participantId"] = p.Id;
-
-                //Create new questionViewController, this is what we will use to run through the test
-                QuestionsViewModel qvm = new QuestionsViewModel(p);
-                System.Web.HttpContext.Current.Session["qvm"] = qvm;
-                return View(qvm);  
+                if (System.Web.HttpContext.Current.Session["qvm"] == null) {
+                    //If poll has not been started yet
+                    SistemContext db = new SistemContext();
+                    //Get the language that will be used to take the test
+                    //For now it will always be english
+                    Language lang = db.Language.Find(9);
+                    //Create the user that will be taking the test
+                    Participant p = new Participant();
+                    p.IPAdress = Request.UserHostAddress;
+                    p.Language = lang;
+                    p.StartDt =DateTime.Now;
+                    //Start the poll as not finished, this value will change when the poll is finished
+                    p.Finished = false;
+                    p.CompleteDt = DateTime.Now;
+                    //Save new user to the database
+                    db.Participant.Add(p);
+                    db.SaveChanges();
+                    //Save value of participant id to session variable, will be used throughout the application
+                    System.Web.HttpContext.Current.Session["participantId"] = p.Id;
+                    //Create new questionViewController, this is what we will use to run through the test
+                    QuestionsViewModel qvm = new QuestionsViewModel(p);
+                    System.Web.HttpContext.Current.Session["qvm"] = qvm;
+                    return View(qvm);
+                }
+                else
+                {
+                    //If poll has been started
+                    return View((QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"]);
+                }
             }
             catch
             {
@@ -220,8 +227,9 @@ namespace LaheyHealth.Controllers
         public ActionResult Poll(List<AnswerAux> answers)
         {
             var p = answers;
-            //Check if answers list is null
-            if (answers != null)
+            //Check if answers list is null and if all items where answered
+            QuestionsViewModel m = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
+            if (answers != null && answers.Count() == m.LstItems.Count() && m.allAnswersComplete(answers)) { 
                 //Check if all items have a value type
 
                 //Store answers
@@ -230,24 +238,24 @@ namespace LaheyHealth.Controllers
                     //Create new score to be inserted
                     try
                     {
-                        SistemContext dbo = new SistemContext();
-                        Scores scoreInsert = new Scores();
-                        scoreInsert.ImportanceValues = dbo.ImportanceValues.Find(item.IdSelectedImportance);
-                        scoreInsert.SkillValues = dbo.SkillValues.Find(item.IdSelectedSkill);
-                        scoreInsert.Item = dbo.Item.Find(item.Id);
-                        //We get language, scale and subscale from the item
-                        scoreInsert.Language = dbo.Language.Find(scoreInsert.Item.Language.Id);
-                        scoreInsert.Scale = dbo.Scale.Find(scoreInsert.Item.Scale.Id);
-                        scoreInsert.Subscale = dbo.Subscale.Find(scoreInsert.Item.Subscale.Id);
-                        //Get the Participant id from session variable
-                        var partIcipantId = System.Web.HttpContext.Current.Session["participantId"];
-                        scoreInsert.Participant = dbo.Participant.Find(System.Web.HttpContext.Current.Session["participantId"]);
-                        //Before we insert the score we calculate the actual score
-                        //To calculate the score we multiply the values for all value types selected
-                        scoreInsert.Score = scoreInsert.SkillValues.Value * scoreInsert.ImportanceValues.Value;
-                        dbo.Scores.Add(scoreInsert);
-                        dbo.SaveChanges();
-                        dbo.Dispose();
+                            SistemContext dbo = new SistemContext();
+                            Scores scoreInsert = new Scores();
+                            scoreInsert.ImportanceValues = dbo.ImportanceValues.Find(item.IdSelectedImportance);
+                            scoreInsert.SkillValues = dbo.SkillValues.Find(item.IdSelectedSkill);
+                            scoreInsert.Item = dbo.Item.Find(item.Id);
+                            //We get language, scale and subscale from the item
+                            scoreInsert.Language = dbo.Language.Find(scoreInsert.Item.Language.Id);
+                            scoreInsert.Scale = dbo.Scale.Find(scoreInsert.Item.Scale.Id);
+                            scoreInsert.Subscale = dbo.Subscale.Find(scoreInsert.Item.Subscale.Id);
+                            //Get the Participant id from session variable
+                            var partIcipantId = System.Web.HttpContext.Current.Session["participantId"];
+                            scoreInsert.Participant = dbo.Participant.Find(System.Web.HttpContext.Current.Session["participantId"]);
+                            //Before we insert the score we calculate the actual score
+                            //To calculate the score we multiply the values for all value types selected
+                            scoreInsert.Score = scoreInsert.SkillValues.Value * scoreInsert.ImportanceValues.Value;
+                            dbo.Scores.Add(scoreInsert);
+                            dbo.SaveChanges();
+                            dbo.Dispose();
                     }
                     catch {
                         Console.Write("error inserting values to the database");
@@ -256,24 +264,27 @@ namespace LaheyHealth.Controllers
                     QuestionsViewModel qvm = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
                     qvm.changeSubscale();
                     //Check if the poll is finished
-                    if (!qvm.Finished)
-                    {
-                        qvm.updateItems();
-                    }
-                    else {
-                        
-                    }
-                    
+                    var redirectUrl = new UrlHelper(Request.RequestContext).Action("Poll", "Items");
+                        return Json(new
+                        {
+                            error = false,
+                            message = "Change to new set of questions"
+                        });
+                                        
                 }
-
-            else {
-                Console.WriteLine("This will be changed for return of error to screen");
             }
-
-            Console.Write(p);
+            else {
+                return Json(new
+                {
+                    error = true,
+                    message = "All poll options need to be answered before proceeding to the next question"
+                });
+            }
+            return Json("Change page");
+            
 
             //Either reload view with errors or redirect to new view
-            return Redirect("Index");
+           
         }
     
     }

@@ -22,6 +22,8 @@ namespace LaheyHealth.ViewModels
         private int lastInsertedAnswer;
         //Stores current scale, needs to be changed
         private string currentScale;
+        //Stores name of current subscale
+        public string currentSubscale { get; set; }
         //Current Subscale index we use this to know how many subscales need to be answered to finish up the poll
         public int currentSubscaleIndex { get; set; }
         //Skill values to be asked
@@ -143,7 +145,7 @@ namespace LaheyHealth.ViewModels
             currentScaleInt = 0;
             //Set the current scale the first one that we are going to work in
             currentScale = LstItems[currentScaleInt].Scale.Name;
-            
+            currentSubscale = LstItems[currentScaleInt].Subscale.Name;
             //Select Skill lists  that users need to answer for the language that was selected
             lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
             //Selec importance lists that users need to answe for the language that was selected
@@ -167,13 +169,15 @@ namespace LaheyHealth.ViewModels
         {
             //Add value to index of current scale
             this.currentSubscaleIndex++;
-            //If land outside the lstsubscale count then the poll is finished
-            if (currentSubscaleIndex >= LstSubscale.Count()) {
+            //If land = to length then we are on the last page of the poll and have to show View Results button
+            if (currentSubscaleIndex >= LstSubscale.Count() - 1) {
                 this.finished = true;
             }
             //If the poll is not finished update items that will be shown
-            if (!this.finished)
+            if (!(currentSubscaleIndex > LstSubscale.Count()))
+            {
                 this.updateItems();
+            }
         }
         //Update current scale and items
         internal void updateItems()
@@ -183,7 +187,31 @@ namespace LaheyHealth.ViewModels
             int subscaleInt = this.lstSubscale[this.currentSubscaleIndex].Id;
             //Get items associated to this scale
             var q = dbo.Item.Where(item => item.Subscale.Id == subscaleInt).ToList();
-            lstItems = q;
+            this.lstItems = q;
+            //Set the current scale to be shown on the view
+            this.currentScale = lstItems[0].Scale.Name;
+            this.currentSubscale = LstItems[0].Subscale.Name;
+            System.Web.HttpContext.Current.Session["qvm"] = this;
+        }
+
+        public int get_page_number() {
+            return this.currentSubscaleIndex + 1;
+        }
+
+        public int get_total_pages()
+        {
+            return this.lstSubscale.Count();
+        }
+
+        //Checks if all answers inserted are completed
+        internal bool allAnswersComplete(List<AnswerAux> answers)
+        {
+            foreach (var item in answers)
+            {
+                if (!item.AllAssigned)
+                    return false;
+            }
+            return true;
         }
 
         /*

@@ -7,7 +7,6 @@ $(document).ready(function () {
     //Array that will store answers to be sent via ajax to post method in item controller
     $('#next').unbind("click");
 
-
     //Get selected answer
     $('.answer').on("click", function () {
         var selected = $(this);
@@ -20,10 +19,18 @@ $(document).ready(function () {
         if (valueTypeLabel == "Skill") {
             //Perform insertion of information for skill value input
             //Check if the item exists in the array of answers
-            var AnswerAux = getItemFromArray(itemId,answers);
-            if (AnswerAux != null)
+            var AnswerAux = getItemFromArray(itemId, answers);
+            console.log(answers);
+            if (AnswerAux != null){
                 //Update answer 
                 AnswerAux.IdSelectedSkill = valueTypeId;
+                //Check if value has been inserted for Importance
+                if(AnswerAux.IdSelectedImportance != null){
+                    //If the value is not null, this means that all values have been assigned
+                    //Check AllAssigned as true
+                    AnswerAux.AllAssigned = true;
+                }
+            }
             else
                 //Insert new item
                 create_insert_item("Skill",itemId,valueTypeId,answers)
@@ -32,9 +39,16 @@ $(document).ready(function () {
             //Perform insertion of information for importance value input
             //Check if the item exists on the array of answers
             var AnswerAux = getItemFromArray(itemId,answers);
-            if (AnswerAux  != null)
+            if (AnswerAux  != null){
                 //Update answer
                 AnswerAux.IdSelectedImportance = valueTypeId;
+                if (AnswerAux.IdSelectedSkill != null){
+                    //If the value is not null, this means that all values have been assigned
+                    //Check AllAssigned as true
+                    AnswerAux.AllAssigned = true;
+                }
+            }
+
             else
                 //Insert new item
                 create_insert_item("Importance", itemId, valueTypeId,answers)
@@ -67,10 +81,17 @@ function create_insert_item(typeValue, itemId, create_insert_item, answers) {
     //Creating new item to be inserted in answers
     var AnswerAux = {};
     AnswerAux.Id = itemId;  //Id of item object that is being answered
-    if(typeValue == "Skill")
+    if(typeValue == "Skill"){
         AnswerAux.IdSelectedSkill = create_insert_item;  // Id of skill value selected
-    if(typeValue == "Importance")
+        //Set value for Importance to null
+        AnswerAux.IdSelectedImportance = null; //Set to null so it can be updated and checked against to inform if all values are in
+    }
+    if(typeValue == "Importance"){
         AnswerAux.IdSelectedImportance = create_insert_item; // Id of Importance value selected
+        AnswerAux.IdSelectedSkill = null; //Set to null so it can be updated and checked against to inform if all values are in
+    }
+    AnswerAux.AllAssigned = false; //This value gets updated once all value types are in the object
+
     //Push new item with answers onto array
     answers.push(AnswerAux);
 }
@@ -79,16 +100,28 @@ function create_insert_item(typeValue, itemId, create_insert_item, answers) {
 function insertAnswers(e) {
     e.preventDefault();
     console.log(answers);
-    answers = JSON.stringify({ answers });
+    lstAnswers = JSON.stringify({ answers });
+    console.log(lstAnswers);
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
         url: "Poll",
         datatype: "json",
         traditional: true,
-        data: answers,
+        data: lstAnswers,
         success: function (data) {
-            console.log("Success: " + data);
+            if (data.message == "Change to new set of questions") {
+                //Redirect to new set of questions
+                //onsole.log("Url to redirect: " + data.url);
+                //window.location.href = data.url;
+                
+                location.reload();
+            }
+            if (data.error) {
+                $('.alert').fadeIn();
+                $('.alert').html("<p>" + data.message + "</p>");
+            }
+
         },
         error: function (error) {
             console.log("Error:" + error);
@@ -97,10 +130,3 @@ function insertAnswers(e) {
     
 
 }
-
-
-/*************************************
-    IMPORTANT REMINDER FOR NICOLAS!
-
-**************************************/
-//After we are able to succesfully send in the data we will need to create a way to check if all data is passed correctly.
