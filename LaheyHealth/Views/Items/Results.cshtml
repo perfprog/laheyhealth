@@ -1,4 +1,4 @@
-﻿@model LaheyHealth.ViewModels.QuestionsViewModel
+﻿@model LaheyHealth.ViewModels.ResultsViewModel
 
 
 @{
@@ -23,10 +23,31 @@
             <th>
                 Scale
             </th>
+            <th>
+                Score | Will be removed, used to make sure all data is displayed correctly
+            </th>
         </tr>
         <!-- For loop of items that will be shown in the view -->
-
-
+        @if (Model.lstEmpty()) { 
+        foreach(var item in Model.LstScores)
+        {
+            <tr>
+                <td>
+                    @item.Item.Name
+                </td>
+                <td>
+                    @item.Subscale.Name
+                </td>
+                <td>
+                    @item.Scale.Name
+                </td>
+                <td>
+                    @item.Score
+                </td>
+            </tr>
+            
+            }
+        }
     </table>
 </div>
 

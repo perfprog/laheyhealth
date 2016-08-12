@@ -258,20 +258,23 @@ namespace LaheyHealth.Controllers
                             dbo.Dispose();
                     }
                     catch {
-                        Console.Write("error inserting values to the database");
-                    }
-                    //Once the data is inserted into the database we check if the user finished with the poll 
-                    QuestionsViewModel qvm = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
-                    qvm.changeSubscale();
-                    //Check if the poll is finished
-                    var redirectUrl = new UrlHelper(Request.RequestContext).Action("Poll", "Items");
                         return Json(new
                         {
-                            error = false,
-                            message = "Change to new set of questions"
+                            error = true,
+                            message = "Sistem error, please refresh and try again. If problem persists contact poll administrator"
                         });
-                                        
+                    }
                 }
+                //Once the data is inserted into the database we check if the user finished with the poll 
+                QuestionsViewModel qvm = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
+                qvm.changeSubscale();
+                //Check if the poll is finished
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Poll", "Items");
+                return Json(new
+                {
+                    error = false,
+                    message = "Change to new set of questions"
+                });
             }
             else {
                 return Json(new
@@ -286,6 +289,19 @@ namespace LaheyHealth.Controllers
             //Either reload view with errors or redirect to new view
            
         }
-    
+
+        //Get results for the poll
+        public ActionResult Results()
+        {
+            SistemContext dbo = new SistemContext();
+            //Get id of user finishing the poll
+            int partIcipantId = (int)System.Web.HttpContext.Current.Session["participantId"];
+            //Get top 10 answers by user
+            var q = dbo.Scores.Where(m => m.Participant.Id == partIcipantId).OrderByDescending(m => m.Score).Take(10).ToList();
+            ResultsViewModel scores = new ResultsViewModel();
+            scores.LstScores = q;
+            //Return list of scores to the view
+            return View(scores);
+        }
     }
 }

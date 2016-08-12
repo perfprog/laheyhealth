@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using LaheyHealth.Models;
 namespace LaheyHealth.ViewModels
 {
     public class ResultsViewModel
     {
-        private int myVar;
+        private List<Scores> lstScores;
 
-        public int MyProperty
+        public List<Scores> LstScores
         {
-            get { return myVar; }
-            set { myVar = value; }
+            get { return lstScores; }
+            set { lstScores = value; }
         }
+
+        public bool lstEmpty()
+        {
+            return lstScores.Count > 0;
+        }
+
 
     }
 }
