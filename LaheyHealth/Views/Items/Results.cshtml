@@ -9,45 +9,74 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <h2>Results:</h2>
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: 100%;">
+            </span>
+        </div>
     </div>
-    
-    <!-- Results table needs to have columns: Item, Subscale, Scale -->
-    <table class="table">
-        <tr>
-            <th>
-                Item
-            </th>
-            <th>
-                Subscale
-            </th>
-            <th>
-                Scale
-            </th>
-            <th>
-                Score | Will be removed, used to make sure all data is displayed correctly
-            </th>
-        </tr>
-        <!-- For loop of items that will be shown in the view -->
-        @if (Model.lstEmpty()) { 
-        foreach(var item in Model.LstScores)
-        {
+</div>
+<!-- Functionality for sending e-mails set in here -->
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+        <p>
+            <i>
+                We don't store e-mail information, your e-mail address is discarded after e-mail has been sent with your results.
+            </i>
+        </p>
+        <label for="txtEmail">Send Results to E-mail</label>
+        <br>
+        <input type="email" class="form-control" id="txtEmail" name="txtEmail"/>
+        <br>
+        <a class="btn btn-success" id="btnSendEmail" href="#">Send E-mail</a>
+        <a class="btn btn-warning" id="btnDownloadPDF" href="#">Download PDF</a>
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <br><br>
+        <!-- Results table needs to have columns: Item, Subscale, Scale -->
+        <table class="table">
             <tr>
-                <td>
-                    @item.Item.Name
-                </td>
-                <td>
-                    @item.Subscale.Name
-                </td>
-                <td>
-                    @item.Scale.Name
-                </td>
-                <td>
-                    @item.Score
-                </td>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Subscale
+                </th>
+                <th>
+                    Scale
+                </th>
+                <!-- To be eliminated from view -->
+                <th>
+                    Score | Will be removed, used to make sure all data is displayed correctly
+                </th>
             </tr>
-            
+            <!-- For loop of items that will be shown in the view -->
+            @if (Model.lstEmpty())
+            {
+                foreach (var item in Model.LstScores)
+                {
+                    <tr>
+                        <td>
+                            @item.Item.Name
+                        </td>
+                        <td>
+                            @item.Subscale.Name
+                        </td>
+                        <td>
+                            @item.Scale.Name
+                        </td>
+                        <!-- To be eliminated from view -->
+                        <td>
+                            @item.Score
+                        </td>
+                    </tr>
+
+                }
             }
-        }
-    </table>
+        </table>
+    </div>
 </div>
 
