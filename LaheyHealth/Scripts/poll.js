@@ -56,7 +56,20 @@ $(document).ready(function () {
 
     })
 
-    $("#next").on("click", insertAnswers);
+    $("#next").on("click", function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", true);
+        insertAnswers();
+    });
+
+    //Click on finish poll
+    $("#finish").unbind("click");
+    $("#finish").on("click", function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", true);
+        insertAnswers();
+    });
+
 });
 
 //Returns item if it is inside of answers array
@@ -97,8 +110,7 @@ function create_insert_item(typeValue, itemId, create_insert_item, answers) {
 }
 
 //Ajax method that sends answers in for user
-function insertAnswers(e) {
-    e.preventDefault();
+function insertAnswers() {
     console.log(answers);
     lstAnswers = JSON.stringify({ answers });
     console.log(lstAnswers);
@@ -110,14 +122,20 @@ function insertAnswers(e) {
         traditional: true,
         data: lstAnswers,
         success: function (data) {
+            //If all answers inserted but not finished send to next set of questions
             if (data.message == "Change to new set of questions") {
                 //Redirect to new set of questions
                 //onsole.log("Url to redirect: " + data.url);
                 //window.location.href = data.url;
-                
                 location.reload();
             }
+            //If all answers inserted but finishend send to results page
+            if (data.message == "Poll Finished") {
+                location.href = 'Results';
+            }
             if (data.error) {
+                $("#next").attr("disabled", false);
+                $("#finish").attr("disabled", false);
                 $('.alert').fadeIn();
                 $('.alert').html("<p>" + data.message + "</p>");
             }

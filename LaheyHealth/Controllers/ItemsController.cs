@@ -267,14 +267,26 @@ namespace LaheyHealth.Controllers
                 }
                 //Once the data is inserted into the database we check if the user finished with the poll 
                 QuestionsViewModel qvm = (QuestionsViewModel)System.Web.HttpContext.Current.Session["qvm"];
-                qvm.changeSubscale();
                 //Check if the poll is finished
-                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Poll", "Items");
-                return Json(new
+                if (qvm.Finished)
                 {
-                    error = false,
-                    message = "Change to new set of questions"
-                });
+                    //If poll is finished send to results page
+                    return Json(new
+                    {
+                        error = false,
+                        message = "Poll Finished"
+                    });
+                }
+                //If poll isn't finished change to new set of questions
+                else { 
+                    qvm.changeSubscale();
+                
+                    return Json(new
+                    {
+                        error = false,
+                        message = "Change to new set of questions"
+                    });
+                }
             }
             else {
                 return Json(new
