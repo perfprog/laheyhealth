@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin")) { 
+
 <h2>Details</h2>
 
 <div>
@@ -52,3 +54,8 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+}
+else {
+    <h2>You need to be logged in as administrator to view this page</h2>
+}

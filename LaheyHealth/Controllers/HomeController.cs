@@ -15,15 +15,23 @@ namespace LaheyHealth.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Start Page?";
-
             return View();
+        }
+
+        public ActionResult AdminHome()
+        {
+            //Check if the user is logged in and redirect to login if he isn't
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else { 
+                return View();
+            }
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Descriptino Message?";
-
             return View();
         }
     }

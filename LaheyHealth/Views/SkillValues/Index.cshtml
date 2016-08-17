@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
+
 <h2>Index</h2>
 
 <p>
@@ -27,7 +30,8 @@
         <th>Actions</th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Value)
@@ -39,7 +43,8 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @try { 
+            @try
+            {
             @Html.DisplayFor(modelItem => item.Language.LanguageName)
             }
             catch
@@ -48,10 +53,15 @@
             }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) 
         </td>
     </tr>
 }
 
 </table>
+}
+else {
+
+    <h2>You need to be logged in as administrator to view this page</h2>
+}

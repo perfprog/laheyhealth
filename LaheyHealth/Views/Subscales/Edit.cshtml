@@ -5,10 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin")) { 
+
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -54,4 +56,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+}
+else {
+    <h2>You need to be logged in as administrator to view this page</h2>
 }

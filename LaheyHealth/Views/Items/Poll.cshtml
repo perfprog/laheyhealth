@@ -1,0 +1,166 @@
+﻿@model LaheyHealth.ViewModels.QuestionsViewModel
+
+@{
+    ViewBag.Title = "Poll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="row youAreHere">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>
+            Questionnaire
+        </h1>
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: 65%;">
+            </span>
+        </div>
+        <h4>Page @Model.get_page_number() of @Model.get_total_pages()</h4>
+    </div>
+</div>
+<!-- Loop through items and show polls acordingly -->
+<!-- Insert current scale -->
+<div class="row" id="scale">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3>
+            @Html.DisplayFor(model => model.CurrentScale)
+        </h3>
+    </div>
+</div>
+<div class="row subscale">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subscale">
+        @Html.DisplayFor(model => model.currentSubscale)
+    </div>
+</div>
+
+        <div class="row itemArea">
+
+            <!-- Get next four in the LstItems that relate to the scale-->
+            @foreach (var item in Model.LstItems)
+            {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  form-group">
+                    <!-- Subscale of item -->
+                    <!-- Item -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                            <p class="well item">
+                                <b>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </b>
+                            </p>
+                        </div>
+                        <p>
+
+                            <!-- check if skill list is not empty, if it isnt show the title and options -->
+                            @if (Model.LstSkill.Count > 0)
+                            {
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <!-- value type-->
+                                    <div class="valueType">
+                                        <hr />
+                                        <b>
+                                            @Html.DisplayFor(skillType => Model.SkillType)
+                                        </b>
+                                        <hr />
+                                    </div>
+                                    <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
+                                    <div class="btn-group btn-block" data-toggle="buttons">
+                                        @foreach (var skill in Model.LstSkill)
+                                        {
+                        <!-- Options to be selected-->
+
+                                            <label class="btn btn-default btn-group-lg answer">
+                                                <input class="btn-block" type="radio" autocomplete="off" data-valueType="@Model.SkillType" name="@item.Id" value="@skill.Id">
+                                                @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <!-- check if importance list is not empty, if it isnt show the title and options -->
+                            @if (Model.LstImportance.Count > 0)
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <!-- value type-->
+                                    <div class="valueType">
+                                        <hr />
+                                        <b>
+                                            @Html.DisplayFor(skillType => Model.ImportanceType)
+                                        </b>
+                                        <hr />
+                                    </div>
+                                    <!-- Loop through diferent questions that need to be answered (Importance and Skill)-->
+                                    <div class="btn-group btn-block" data-toggle="buttons">
+                                        @foreach (var importance in Model.LstImportance)
+                                        {
+                                        <!-- these will be radio buttons, but for now we will just leave them as texts-->
+                                            <label class="btn btn-default btn-group-lg answer">
+                                                <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="@Model.ImportanceType" name="@item.Id" value="@importance.Id">
+                                                @Html.DisplayFor(importanceItem => importance.Label)
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </p>
+
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        <div class="row">
+        <!-- Place to show errors-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger">
+                </div>
+            </div>
+            </div>
+
+
+        <div class="row">
+
+            @if (Model.get_page_number() != 1)
+            {
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <a class="btn btn-primary btn-block" href="#" id="previous"><h3>Previous</h3></a>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <!-- If poll is not finished yet show next button-->
+                    @if (Model.Finished == false)
+                    {
+                        <a class="btn btn-primary btn-block" href="#" id="next"><h3>Next</h3></a>
+                    }
+                    else {
+                <!-- If poll is finished show button to go to results view -->
+                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish Poll and View Results</h3></a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- If poll is not finished yet show next button-->
+                    @if (Model.Finished == false)
+                    {
+                        <a class="btn btn-primary btn-block" href="#" id="next"><h3>Next</h3></a>
+                    }
+                    else {
+                <!-- If poll is finished show button to go to results view -->
+                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish Poll and View Results</h3></a>
+                    }
+                </div>
+            }
+        </div>
+
+
+        <script type="text/javascript">
+
+        </script>
