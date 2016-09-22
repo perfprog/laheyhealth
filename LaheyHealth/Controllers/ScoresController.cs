@@ -12,7 +12,7 @@ namespace LaheyHealth.Controllers
 {
     public class ScoresController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: Scores
         public ActionResult Index()

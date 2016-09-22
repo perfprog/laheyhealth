@@ -17,22 +17,18 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-        <h2>Are you considering overseas expansion?</h2>
-        <p>International expansion initiatives are often an essential part of a company’s growth strategy. And, most companies are meticulous in their analysis of the external conditions that await them abroad. Frequently overlooked however, are the internal barriers that can sabotage their venture before it has a chance to take off. We have developed the Lahey Health survey to capture data reflecting your perception of your organization’s preparedness regarding the fundamental internal areas.</p>
-        <br>
-        
-        @Html.ActionLink("Take the Lahey Health Survey Now", "Poll", "Items", null, new { @class = "btn btn-success btn-lg" })
-        <p>
-            <br>
-            Upon completion of the 5 minute, 28 question (4 per tude) survey, you will see your score in a spider chart infographic. This will help you identify which “tudes” your organization did right as well as the “tudes that preclude,” so you can avoid them in the future. You can even email the results to yourself. Thanks for participating in our survey and sharing your information and experience. By doing so, you are contributing to ongoing academic research.
-            <br>
-            <br>
-            @Html.ActionLink("Learn about the Lahey Health Survey", "About", "Home", new { @class = "btn btn-success btn-lg" })
-            <br>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+        <h2>Welcome to the Leading Forward Competency Assessment!</h2>
+        <p style="text-align:justify;">
+            The Leading Forward Competency Assessment has been created to help you understand your leadership strengths (skill level) in relationship to your specific role (Importance). Built using twenty-six leadership competencies divided into three categories of leadership: Leading Oneself, Leading Others and Leading Organizations, each competency includes a few statements that describe the behaviors needed to perform that leadership or coaching skill. When completing the assessment, think through your answers by remembering how you might have interacted with a team member, peer or boss.
         </p>
+        <p style="text-align:justify;">
+            After you have finished the leadership assessment, complete your development plan (located on Lahey Learning MassNet) to help you prioritize your learning objectives, identify and track measurable results and better select from Lahey Leadership Academy courses and other development offerings.
+        </p>
+        <br />
+            @Html.ActionLink("Take the Leading Forward Competency Assessment Now", "startPoll", "Items", null, new { @class = "btn btn-success btn-lg" })
+        
+        <br />
     </div>
-    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-        <img class="img-responsive" src="~/images/7tudes_circumplex.png"/>
-    </div>
+    
 </div>

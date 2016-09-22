@@ -28,7 +28,7 @@ using (Html.BeginForm())
                 @Html.ValidationMessageFor(model => model.ImportanceValues.Value, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
             @Html.LabelFor(model => model.ImportanceValues.Label, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -36,17 +36,17 @@ using (Html.BeginForm())
                 @Html.ValidationMessageFor(model => model.ImportanceValues.Label, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
             @Html.LabelFor(model => model.ImportanceValues.Language, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                @Html.DropDownListFor(model => model.LangId, Model.LanguageList, new { @class = "form-control col-md-2" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </div>
     </div>

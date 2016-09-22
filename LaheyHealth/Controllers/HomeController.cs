@@ -12,11 +12,7 @@ namespace LaheyHealth.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
-        {
-            return View();
-        }
+        
 
         public ActionResult AdminHome()
         {
@@ -30,9 +26,6 @@ namespace LaheyHealth.Controllers
             }
         }
 
-        public ActionResult Contact()
-        {
-            return View();
-        }
+        
     }
 }

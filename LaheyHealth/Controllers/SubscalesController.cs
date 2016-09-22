@@ -13,7 +13,7 @@ namespace LaheyHealth.Controllers
 {
     public class SubscalesController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: Subscales
         public ActionResult Index()
@@ -52,7 +52,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //Craete new connection
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Get scale and language
                 Language lang = db.Language.Find(svm.LangId);
                 Scale scale = db.Scale.Find(svm.ScaleId);
@@ -106,7 +106,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //Create new context connection
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Get susbscale to be edited as well as scale and language
                 Subscale subscale = db.Subscale.Find(svm.SubScale.Id);
                 Language lang = db.Language.Find(svm.LangId);

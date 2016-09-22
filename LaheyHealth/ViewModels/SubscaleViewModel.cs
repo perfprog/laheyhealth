@@ -54,7 +54,7 @@ namespace LaheyHealth.ViewModels
         }
 
         public void loadData() {
-            SistemContext db = new SistemContext();
+            SystemContext db = new SystemContext();
             langList = new SelectList(db.Language,"Id", "languageName");
             scaleList = new SelectList(db.Scale,"Id","name");
         }

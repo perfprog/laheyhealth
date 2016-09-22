@@ -13,7 +13,7 @@ namespace LaheyHealth.Controllers
 {
     public class LanguageController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: Language
         public async Task<ActionResult> Index()

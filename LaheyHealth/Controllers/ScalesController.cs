@@ -12,7 +12,7 @@ namespace LaheyHealth.Controllers
 {
     public class ScalesController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: Scales
         public ActionResult Index()
@@ -51,7 +51,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //Get Language
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 Scale scale = new Scale();
                 Language lang = db.Language.Find(scaleViewModel.LangId);
                 //Asign language to scale
@@ -105,7 +105,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //Get Language
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Check if there isn't a scale with the same name
                 var q = db.Scale.Where(m => m.Name.ToUpper() == scaleViewModel.Scale.Name.ToUpper()).SingleOrDefault();
                 //Make sure you are not comparing against itself
@@ -116,7 +116,7 @@ namespace LaheyHealth.Controllers
                     return View(scaleViewModel);
                 }
                 db.Dispose();
-                SistemContext dbo = new SistemContext();
+                SystemContext dbo = new SystemContext();
                 Language lang = dbo.Language.Find(scaleViewModel.LangId);
                 Scale scale = dbo.Scale.Find(scaleViewModel.Scale.Id);
                 scale.Language = lang;

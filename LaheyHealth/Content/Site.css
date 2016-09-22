@@ -159,5 +159,14 @@ h1{
 
 .alert{
     display:none;
+    margin-top:5px;
 }
 
+/*
+    Adding padding top to the admin menu
+
+*/
+
+.navbar-collapse.collapse{
+    padding-top:15px;
+}

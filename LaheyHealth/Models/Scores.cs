@@ -69,7 +69,7 @@ namespace LaheyHealth.Models
             set { participant = value; }
         }
 
-        public int Score
+        public virtual int Score
         {
             get { return score; }
             set { score = value; }

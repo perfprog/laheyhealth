@@ -1,11 +1,17 @@
 ﻿@model LaheyHealth.ViewModels.QuestionsViewModel
 
 @{
-    ViewBag.Title = "Poll";
+    ViewBag.Title = "Questionnaire";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{ 
+    int i = 0;
+    int j = 0;    
+}
 
+
+    
 
 
 <div class="row youAreHere">
@@ -14,7 +20,7 @@
             Questionnaire
         </h1>
         <div class="progress" style="width:100%;">
-            <span class="progress-bar progress-bar-success" style="width: 65%;">
+            <span class="progress-bar progress-bar-success" style="width: @Model.getPercetageOfQuestionsLeft()%;">
             </span>
         </div>
         <h4>Page @Model.get_page_number() of @Model.get_total_pages()</h4>
@@ -23,16 +29,19 @@
 <!-- Loop through items and show polls acordingly -->
 <!-- Insert current scale -->
 <div class="row" id="scale">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <h3>
             @Html.DisplayFor(model => model.CurrentScale)
         </h3>
     </div>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button style="margin-top:12px;" id="cancel" class="btn btn-danger pull-right">Restart Questionnaire</button>
+    </div>
 </div>
 <div class="row subscale">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subscale">
-        @Html.DisplayFor(model => model.currentSubscale)
-    </div>
+        @Html.DisplayFor(model => model.currentSubscale)        
+    </div>   
 </div>
 
         <div class="row itemArea">
@@ -71,12 +80,24 @@
                                     <div class="btn-group btn-block" data-toggle="buttons">
                                         @foreach (var skill in Model.LstSkill)
                                         {
-                        <!-- Options to be selected-->
-
-                                            <label class="btn btn-default btn-group-lg answer">
-                                                <input class="btn-block" type="radio" autocomplete="off" data-valueType="@Model.SkillType" name="@item.Id" value="@skill.Id">
-                                                @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
-                                            </label>
+                                            
+                                            <!-- Options to be selected-->
+                                            if (Model.lstSkillValueAnswers.Count > 0 && Model.lstSkillValueAnswers[i] == skill.Id)
+                                            {
+                                                <!-- if there are answers in the db for this item in the database then set it-->
+                                                <label class="btn btn-default btn-group-lg answer active">
+                                                    <input class="btn-block" type="radio" autocomplete="off" data-valueType="Skill" name="@item.Id" value="@skill.Id">
+                                                    @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <!-- If there are no answers for this item in the database then -->
+                                                <label class="btn btn-default btn-group-lg answer">
+                                                    <input class="btn-block" type="radio" autocomplete="off" data-valueType="Skill" name="@item.Id" value="@skill.Id">
+                                                    @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
+                                                </label>
+                                            }
                                         }
                                     </div>
                                 </div>
@@ -98,13 +119,25 @@
                                         @foreach (var importance in Model.LstImportance)
                                         {
                                         <!-- these will be radio buttons, but for now we will just leave them as texts-->
-                                            <label class="btn btn-default btn-group-lg answer">
-                                                <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="@Model.ImportanceType" name="@item.Id" value="@importance.Id">
-                                                @Html.DisplayFor(importanceItem => importance.Label)
-                                            </label>
+                                            if (Model.lstImportanceValueAnswers.Count > 0 && Model.lstImportanceValueAnswers[i] == importance.Id)
+                                            {
+                                                <label class="btn btn-default btn-group-lg answer active">
+                                                    <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="Importance" name="@item.Id" value="@importance.Id">
+                                                    @Html.DisplayFor(importanceItem => importance.Label)
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="btn btn-default btn-group-lg answer">
+                                                    <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="Importance" name="@item.Id" value="@importance.Id">
+                                                    @Html.DisplayFor(importanceItem => importance.Label)
+                                                </label>
+                                            }
+                                            
                                         }
                                     </div>
                                 </div>
+                                i++;
                             }
                         </p>
 
@@ -124,7 +157,10 @@
 
 
         <div class="row">
-
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+            {
+                @Html.AntiForgeryToken()
+            }
             @if (Model.get_page_number() != 1)
             {
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -133,34 +169,64 @@
 
 
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <!-- If poll is not finished yet show next button-->
-                    @if (Model.Finished == false)
+                    <!-- If poll is not lastPage yet show next button-->
+                    @if (Model.lastPage == false)
                     {
                         <a class="btn btn-primary btn-block" href="#" id="next"><h3>Next</h3></a>
                     }
                     else {
-                <!-- If poll is finished show button to go to results view -->
-                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish Poll and View Results</h3></a>
+                <!-- If poll is lastPage show button to go to results view -->
+                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish and Review Results</h3></a>
                     }
                 </div>
             }
             else
             {
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <!-- If poll is not finished yet show next button-->
-                    @if (Model.Finished == false)
+                    <!-- If poll is not lastPage yet show next button-->
+                    @if (Model.lastPage == false)
                     {
                         <a class="btn btn-primary btn-block" href="#" id="next"><h3>Next</h3></a>
                     }
                     else {
-                <!-- If poll is finished show button to go to results view -->
-                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish Poll and View Results</h3></a>
+                <!-- If poll is lastPage show button to go to results view -->
+                        <a class="btn btn-warning btn-block" href="#" id="finish"><h3>Finish and Review Results</h3></a>
                     }
                 </div>
             }
+        
+        </div>
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h1 class="modal-title text-danger" id="myModalLabel">Warning!</h1>
+                    </div>
+                    <div class="modal-body">
+                        If you restart this questionnaire you will lose all of the answers inserted up until this moment.
+                    </div>
+                    <div class="modal-footer">
+                        @Html.ActionLink("Restart Questionnaire", "RestartPoll", "Poll", new { @class = "btn btn-danger" })
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Continue with Questionnaire</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-        <script type="text/javascript">
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#cancel").unbind("click");
+            $("#cancel").on("click", generateReport);
+        });
 
-        </script>
+        function generateReport() {
+            //Show modal with warning message
+            $("#cancelModal").modal('show');
+        }
+    </script>
+}

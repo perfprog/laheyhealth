@@ -40,7 +40,7 @@ namespace LaheyHealth.ViewModels
 
         //Load languages onto select list
         public void LoadLanguages() {
-            SistemContext db = new SistemContext();
+            SystemContext db = new SystemContext();
             languageList = new SelectList(db.Language, "Id", "languageName");
         }
         

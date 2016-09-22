@@ -13,7 +13,7 @@ namespace LaheyHealth.Controllers
 {
     public class ImportanceValuesController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: ImportanceValues
         public ActionResult Index()
@@ -54,18 +54,18 @@ namespace LaheyHealth.Controllers
                 ImportanceValues iv = new ImportanceValues();
                 
                 iv = importanceViewModel.ImportanceValues;
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 Language lang = db.Language.Find(importanceViewModel.LangId);
                 iv.Language = lang;
                 if(lang != null)
                 {
                     if (lang.LanguageName == "English")
                     {
-                        importanceViewModel.ImportanceValues.Type = "Importance";
+                        importanceViewModel.ImportanceValues.Type = "Importance to Role";
                     }
                     if(lang.LanguageName == "Español")
                     {
-                        importanceViewModel.ImportanceValues.Type = "Importancia";
+                        importanceViewModel.ImportanceValues.Type = "Importancia para el Rol";
                     }
                 }
                 
@@ -109,7 +109,7 @@ namespace LaheyHealth.Controllers
         {
             try {
                 //Search for iv we are changing
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Search for language changes
                 Language lang = db.Language.Find(ivvm.LangId);
                 ImportanceValues iv = db.ImportanceValues.Find(ivvm.ImportanceValues.Id);
@@ -121,7 +121,7 @@ namespace LaheyHealth.Controllers
                 {
                     if (lang.LanguageName == "English")
                     {
-                        iv.Type = "Importance";
+                        iv.Type = "Importance to Role";
                     }
                 }
                 //save changes

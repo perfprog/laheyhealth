@@ -72,7 +72,7 @@ namespace LaheyHealth.ViewModels
         }
         public void loadLists()
         {
-            SistemContext db = new SistemContext();
+            SystemContext db = new SystemContext();
             this.langList = new SelectList(db.Language, "Id", "LanguageName");
             this.scaleList = new SelectList(db.Scale, "Id", "name");
             this.subScaleList = new SelectList(db.Subscale,"Id", "name");

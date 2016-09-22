@@ -5,7 +5,7 @@ namespace LaheyHealth.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LaheyHealth.Models.SistemContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LaheyHealth.Models.SystemContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace LaheyHealth.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(LaheyHealth.Models.SistemContext context)
+        protected override void Seed(LaheyHealth.Models.SystemContext context)
         {
             //  This method will be called after migrating to the latest version.
 

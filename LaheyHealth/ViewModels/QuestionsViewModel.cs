@@ -37,6 +37,14 @@ namespace LaheyHealth.ViewModels
         //Stores a boolean that informs us if the poll has been finished or not
         //Is used to show different button on view so users can go ahead and go to the results page
         private bool finished;
+        //skills selected - used if answers have already been set for the element
+        public List<int> lstSkillValueAnswers { get; set; }
+        //importance values selected - used if answers have already been set for the element
+        public List<int> lstImportanceValueAnswers { get; set; }
+        //store information letting us know we are in the last page
+        public bool lastPage { get; set; }
+        
+
         private List<Subscale> lstSubscale = new List<Subscale>();
 
         public List<Subscale> LstSubscale
@@ -128,7 +136,10 @@ namespace LaheyHealth.ViewModels
         //Items are loaded ordered by scale number
         public void LoadData(Language lang)
         {
-            SistemContext db = new SistemContext();
+            this.lastPage = false;
+            SystemContext db = new SystemContext();
+            this.lstImportanceValueAnswers = new List<int>();
+            this.lstSkillValueAnswers = new List<int>();
             //We will get items in a different manner
             //var items = db.Item.Where(m => m.Language.Id == lang.Id).OrderBy(m=> m.Scale.Id).ToList();
             //Get subscales asociated to the language and order them by scale
@@ -147,9 +158,9 @@ namespace LaheyHealth.ViewModels
             currentScale = LstItems[currentScaleInt].Scale.Name;
             currentSubscale = LstItems[currentScaleInt].Subscale.Name;
             //Select Skill lists  that users need to answer for the language that was selected
-            lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
+            lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Value).ToList();
             //Selec importance lists that users need to answe for the language that was selected
-            lstImportance = db.ImportanceValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Id).ToList();
+            lstImportance = db.ImportanceValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Value).ToList();
 
             //If lstSkill is not empty we set the value for its type so we can show it on the view
             //Done this way to automatically get language
@@ -170,11 +181,15 @@ namespace LaheyHealth.ViewModels
             //Add value to index of current scale
             this.currentSubscaleIndex++;
             //If land = to length then we are on the last page of the poll and have to show View Results button
-            if (currentSubscaleIndex >= LstSubscale.Count() - 1) {
-                this.finished = true;
+            //We set last page equals to true
+            if (currentSubscaleIndex == LstSubscale.Count() - 1) {
+                this.lastPage = true;
             }
+            //Check if poll is finished and change value to finished
+            if (currentSubscaleIndex == LstSubscale.Count())
+                this.finished = true;
             //If the poll is not finished update items that will be shown
-            if (!(currentSubscaleIndex > LstSubscale.Count()))
+            if (!this.finished)
             {
                 this.updateItems();
             }
@@ -182,20 +197,74 @@ namespace LaheyHealth.ViewModels
         //Update current scale and items
         internal void updateItems()
         {
-            SistemContext dbo = new SistemContext();
+            this.lstImportanceValueAnswers.Clear();
+            this.lstSkillValueAnswers.Clear();
+            SystemContext dbo = new SystemContext();
             //Get subscale we are working on
             int subscaleInt = this.lstSubscale[this.currentSubscaleIndex].Id;
             //Get items associated to this scale
             var q = dbo.Item.Where(item => item.Subscale.Id == subscaleInt).ToList();
             this.lstItems = q;
+            //Get all answers inserted previously for these scales
+            int participantId = (int)System.Web.HttpContext.Current.Session["participantId"];
+            foreach (Item i in this.LstItems)
+            {
+                Scores s = dbo.Scores.Where(m => m.Item.Id == i.Id && m.Participant.Id == participantId).FirstOrDefault();
+                if(s != null) { 
+                    this.lstImportanceValueAnswers.Add(s.ImportanceValues.Id);
+                    this.lstSkillValueAnswers.Add(s.SkillValues.Id);
+                }
+            }
             //Set the current scale to be shown on the view
             this.currentScale = lstItems[0].Scale.Name;
             this.currentSubscale = LstItems[0].Subscale.Name;
             System.Web.HttpContext.Current.Session["qvm"] = this;
         }
+        //Go back one subscale
+        public void changeSubscaleBackwards()
+        {
+            //Add value to index of current scale
+            if (this.currentSubscaleIndex != 0) { 
+                this.currentSubscaleIndex--;
+                this.lastPage = false;
+                //If the poll is not finished update items that will be shown
+                if (!(currentSubscaleIndex > LstSubscale.Count()))
+                {
+                    this.updateItems();
+                }
+            }
+        }
 
+        //Since page numbers are binded to current scale we send back current scale +1 for page number (index is based of 0)
         public int get_page_number() {
             return this.currentSubscaleIndex + 1;
+        }
+
+        internal bool alreadyAnswered(List<AnswerAux> answers)
+        {
+            //Check if the questions have been answered (if one of the questions in the list is answered then they all are)
+
+            bool answered = false;
+            SystemContext db = new SystemContext();
+            var item = answers[0];
+            try
+            {
+                Item auxItem = db.Item.Find(item.Id);
+                //Search the database to check if there us one answer with this id and user id
+                int userId = (int)System.Web.HttpContext.Current.Session["participantId"];
+                Scores result = null;
+                result = db.Scores.Where(m => m.Participant.Id == userId && m.Item.Id == auxItem.Id).FirstOrDefault();
+                if(result != null)
+                {
+                    answered = true;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error comparing items to answers");
+                return false;
+            }
+            return answered;
         }
 
         public int get_total_pages()
@@ -214,10 +283,15 @@ namespace LaheyHealth.ViewModels
             return true;
         }
 
-        /*
-        
-         var q = db.Scale.Where(m => m.Name.ToUpper() == scaleViewModel.Scale.Name.ToUpper()).SingleOrDefault();
-        */
+        public double getPercetageOfQuestionsLeft()
+        {
+            int total = this.get_total_pages();
+            int actual = this.get_page_number();
+            double a = actual * 75;
+            a = a / total;
+            a = a + 25;
+            return a;
+        }
 
     }
 }

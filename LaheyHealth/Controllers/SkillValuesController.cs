@@ -12,7 +12,7 @@ namespace LaheyHealth.Controllers
 {
     public class SkillValuesController : Controller
     {
-        private SistemContext db = new SistemContext();
+        private SystemContext db = new SystemContext();
 
         // GET: SkillValues
         public ActionResult Index()
@@ -51,7 +51,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //New connection
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Find associated language
                 Language lang = db.Language.Find(svm.LangId);
                 //Create new skill value
@@ -61,7 +61,7 @@ namespace LaheyHealth.Controllers
                 sv.Language = lang;
                 if(lang != null) { 
                     if (lang.LanguageName == "English") { 
-                        sv.Type = "Skill";
+                        sv.Type = "Leadership Skill Level";
                     }
                 }
                 //Store
@@ -108,7 +108,7 @@ namespace LaheyHealth.Controllers
             try
             {
                 //Create new db connectino
-                SistemContext db = new SistemContext();
+                SystemContext db = new SystemContext();
                 //Get skill value related to from database.
                 SkillValues sv = db.SkillValues.Find(svm.SkillValues.Id);
                 //Get language to be asigned to sv
@@ -121,7 +121,7 @@ namespace LaheyHealth.Controllers
                 {
                     if (lang.LanguageName == "English")
                     {
-                        sv.Type = "Skill";
+                        sv.Type = "Leadership Skill Level";
                     }
                 }
                 //Update db
