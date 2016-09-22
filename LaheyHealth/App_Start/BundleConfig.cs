@@ -26,6 +26,9 @@ namespace LaheyHealth
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/poll").Include(
+                    "~/Scripts/poll.js"
+                ));
         }
     }
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cubisima.utils</name>
+    </assembly>
+    <members>
+        <member name="T:cubisima.utils.AmazonHelper">
+            <summary>
+            Contains helper methods to upload objects to Amazon S3 virtual drive
+            </summary>
+        </member>
+        <member name="M:cubisima.utils.AmazonHelper.CreateBucket(System.String)">
+            <summary>
+            Creates a bucket for storing object at Amazon.
+            </summary>
+            <param name="bucketName">The name of the Bucket</param>
+            <returns></returns>
+        </member>
+        <member name="M:cubisima.utils.AmazonHelper.UploadObject(System.IO.Stream,System.String,System.String)">
+            <summary>
+            Uploads an object to a virtual bucket space at Amazon
+            </summary>
+            <param name="stream">The stream to upload.</param>
+            <param name="prefix">The Amazon prefix to use (Eg.: fotos_cubisima/_Directorio/)</param>
+            <param name="filename">The filename to set for uploaded object (Eg.: foto1.gif)</param>
+            <returns></returns>
+        </member>
+        <member name="T:cubisima.utils.RoutoSMSTelecom">
+            <summary>
+              Summary description for RoutoSMSTelecom
+            </summary>
+        </member>
+        <member name="T:cubisima.utils.SearchHelper">
+            <summary>
+            Contains helper to clean urls, validates unwanted words and other functions used on searchs
+            </summary>
+        </member>
+        <member name="M:cubisima.utils.SearchHelper.Sluggify(System.String)">
+            <summary>
+            Sluggifies the given text.
+            <remarks>
+            Sluggify is the process of removing all the ilegal characters in the text in order to be url addresable.
+            </remarks>
+            </summary>
+            <param name="text">The text to sluggify</param>
+            <returns>Sluggified text</returns>
+        </member>
+        <member name="M:cubisima.utils.SearchHelper.CleanUrl(System.String)">
+            <summary>
+            Cleans the given url removing all ilegal characters.
+            </summary>
+            <param name="wordToAnalize">The url to analize</param>
+            <returns></returns>
+        </member>
+        <member name="M:cubisima.utils.SearchHelper.CleanTextForSearchs(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Cleans the given text and prepares it for putting it on the url, removes the trivial words.
+            </summary>
+            <param name="textForSearch">The text to clean for search</param>
+            <param name="wordLimit">Set the limit of words to analize, if passed only includes <paramref name="wordLimit"/> words</param>
+            <returns></returns>
+        </member>
+        <member name="T:cubisima.utils.EmailHelper">
+            <summary>
+            Contains helper functions to send emails messages
+            </summary>
+        </member>
+        <member name="M:cubisima.utils.EmailHelper.SendMail(System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.Int32)">
+            <summary>
+            Send an email message to a given address
+            </summary>
+            <param name="mailsubject">The subject of the mail message</param>
+            <param name="mailfrom">The from address for the message (Eg. noreply@cubisima.com)</param>
+            <param name="mailto">The address to send the email. (Eg. user@domain.com)</param>
+            <param name="mailbody">The body for the message</param>
+            <param name="priority">The priority of the mail message. The higher the value the bigger is the priority. (Valid values: 1 - 10. Default: 5 (normal))</param>
+            <param name="connectionStringName">The name of the connectionString to use. If null, connectionString with the name emailDeliveryConnectionString is used</param>
+            <param name="attachment">The attachment to send with the message</param>
+            <param name="format">Set format to 1 to send message as html. 0 for plain text. Default:0 (plain text)</param>
+        </member>
+        <member name="T:cubisima.utils.SmsHelper">
+            <summary>
+            Send a sms message to any number using RoutoTelecom gateway.
+            </summary>
+        </member>
+        <member name="M:cubisima.utils.SmsHelper.SendSMS(System.String,System.String,System.String)">
+            <summary>
+            Sends a sms to any cellphone
+            </summary>
+            <param name="from">The cellphone sending the sms</param>
+            <param name="to">The cellphone receiving the message</param>
+            <param name="text">The text of the message.</param>
+            <returns>True if message sent, false otherwise</returns>
+        </member>
+    </members>
+</doc>

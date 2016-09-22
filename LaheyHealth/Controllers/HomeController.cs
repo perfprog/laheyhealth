@@ -12,19 +12,20 @@ namespace LaheyHealth.Controllers
         {
             return View();
         }
+        
 
-        public ActionResult About()
+        public ActionResult AdminHome()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            //Check if the user is logged in and redirect to login if he isn't
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else { 
+                return View();
+            }
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
     }
 }

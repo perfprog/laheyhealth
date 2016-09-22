@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <configSections>
+    <section name="dxmfw" type="DxM.Framework.Configurations.DxMFwSection, DxMFw, Version=1.3.1, Culture=neutral, PublicKeyToken=4b473c8c667d736b" xdt:Transform="Insert" />
+  </configSections>
+
+  <dxmfw xdt:Transform="InsertIfMissing">
+  </dxmfw>
+</configuration>

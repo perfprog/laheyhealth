@@ -22,3 +22,151 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/***********************
+    CUSTOM CSS 
+    STARTS HERE
+***********************/
+
+
+footer {
+    background-color:#62bb46;
+    color:#ffffff;
+    min-height:80px;
+}
+
+footer p{
+    padding:30px 20px;
+}
+
+footer a:hover, footer a:visited, footer a{
+    color:#ffffff;
+}
+
+
+h2{
+    font-weight:bold;
+    color:#468732;
+}
+
+h1{
+    font-weight:bold;
+}
+
+/*
+    Current spot in poll
+    Intrduction, Questionnaire, Results
+*/
+.youAreHere h1{
+    padding-left:20px;
+}
+
+/*
+    Getting the bootstrap button to wrap
+*/
+
+.btn{
+    white-space:normal;
+}
+
+#scale{
+    background-color:#4b4b4b;
+    color:#ffffff;
+    width:100%;
+    margin:0 auto;
+}
+
+.subscale{
+    color:#62bb46;
+    padding:10px 10px;
+    font-size:24px;
+}
+
+.item{
+    color:#4b4b4b;
+    padding-left:25px;
+    margin-top:70px;
+    padding-bottom:10px;
+    margin-bottom:0px;
+    font-size:20px;
+}
+
+
+.value{
+    padding-left:35px;
+}
+
+
+.valueType{
+    font-size:25px;
+    line-height:7px;
+}
+
+
+.itemArea{
+    border:1px solid #d1d1d1;
+    
+    width:100%;
+    margin: 0 auto;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-top:5px;
+    margin-bottom:30px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-block {
+        margin-bottom:5px;
+    }
+
+/*
+    Responsive video css
+*/
+
+.form-group{
+    margin-bottom:0px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .responsive-video{
+        width:560px;
+        height:305px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .responsive-video {
+        width: 400px;
+        height: 200px;
+    }
+
+    .item {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive-video{
+        width:225px;
+        height:120px;
+    }
+    .item{
+        margin-top:10px;
+    }
+}
+
+.alert{
+    display:none;
+    margin-top:5px;
+}
+
+/*
+    Adding padding top to the admin menu
+
+*/
+
+.navbar-collapse.collapse{
+    padding-top:15px;
+}
