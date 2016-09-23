@@ -162,7 +162,7 @@ namespace LaheyHealth.ViewModels
             currentScale = LstItems[currentScaleInt].Scale.Name;
             currentSubscale = LstItems[currentScaleInt].Subscale.Name;
             //Select Skill lists  that users need to answer for the language that was selected
-            lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Value).ToList();
+            lstSkill = db.SkillValues.Where(m => m.Language.Id == lang.Id).OrderByDescending(m => m.Value).ToList();
             //Selec importance lists that users need to answe for the language that was selected
             lstImportance = db.ImportanceValues.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Value).ToList();
 
