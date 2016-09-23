@@ -115,8 +115,8 @@
         function generateReport() {
             //Get e-mail address
             var email = $("#txtEmail").val();
-            $("#modalMessage").modal('show');
             if (validateEmail(email)) {
+                $("#modalMessage").modal('show');
                 email = JSON.stringify({ email: email });
                 $('.alert').fadeOut();
                 
@@ -131,7 +131,8 @@
                         
                     },
                     error: function (data) {
-                        console.log("Error processing request " + data);
+                        $('.alert').fadeIn();
+                        $('.alert').html("<p>ERROR - Please try again or contact system administrator.</p>");                        
                     }
                 });
             }
