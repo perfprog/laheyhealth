@@ -143,17 +143,21 @@ namespace LaheyHealth.ViewModels
             //We will get items in a different manner
             //var items = db.Item.Where(m => m.Language.Id == lang.Id).OrderBy(m=> m.Scale.Id).ToList();
             //Get subscales asociated to the language and order them by scale
-            var lstSubscales = db.Subscale.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Scale.Id).ToList();
-            //Store lst of subscale that we will be working on
-            this.LstSubscale = lstSubscales;
-            //Get the ammount of subscales that need to be answered
-            totalAmmount = this.LstSubscale.Count();
+
+            //Get list of items -> order them by subscale -> load list of scales (this way we can't have null reference exceptions because of missing itmes for new subscales that might be inserted into the sistem)
+
             //Set the first items to be answered (we will be getting them by subscale id)
+            var q = db.Item.Where(m => m.Language.Id == lang.Id).OrderBy(m => m.Subscale.Id).ToList();
+            //Get list of subscales from the list of items to make sure we dont visit scales that are empty during the poll
+            loadSubscales(q);
+
             int subScaleId = LstSubscale[0].Id;
             this.currentSubscaleIndex = 0;
             var items = db.Item.Where(m => m.Subscale.Id == subScaleId).ToList();
             LstItems = items;
             currentScaleInt = 0;
+            //Get total ammount of subscales that need to be answered
+            totalAmmount = this.LstSubscale.Count();
             //Set the current scale the first one that we are going to work in
             currentScale = LstItems[currentScaleInt].Scale.Name;
             currentSubscale = LstItems[currentScaleInt].Subscale.Name;
@@ -173,6 +177,16 @@ namespace LaheyHealth.ViewModels
                 importanceType = lstImportance[0].Type;
             }
             this.finished = false;
+        }
+
+        private void loadSubscales(List<Item> q)
+        {
+            //Load all subscales present in the poll that will be taken
+            foreach(Item i in q)
+            {
+                if (!LstSubscale.Contains(i.Subscale))
+                    LstSubscale.Add(i.Subscale);
+            }
         }
 
         //Change subscale we are working on

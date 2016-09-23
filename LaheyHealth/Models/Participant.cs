@@ -16,7 +16,7 @@ namespace LaheyHealth.Models
         private String ipAddress;
         private bool finished;
 
-        public bool Finished
+        public virtual bool Finished
         {
             get { return finished; }
             set { finished = value; }
@@ -32,13 +32,13 @@ namespace LaheyHealth.Models
         }
 
         //Value should not be considered untill poll is marked as finished in boolean finished
-        public DateTime? CompleteDt
+        public virtual DateTime? CompleteDt
         {
             get { return completedDt; }
             set { completedDt = (DateTime)value; }
         }
 
-        public DateTime StartDt
+        public virtual DateTime StartDt
         {
             get { return startDt; }
             set { startDt = value; }

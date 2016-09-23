@@ -198,13 +198,17 @@ namespace LaheyHealth.Controllers
                     Language lang = db.Language.Find(9);
                     //Create the user that will be taking the test
                     Participant p = new Participant();
-                    p.IPAdress = Request.UserHostAddress;
+                    p.IPAdress = new WebClient().DownloadString("http://icanhazip.com");
+                    //if Icanhazip is not working store an empty string in
+                    if (p.IPAdress.Equals(""))
+                    {
+                        p.IPAdress = "Error";
+                    }
                     p.Language = lang;
                     p.StartDt =DateTime.Now;
                     //Start the poll as not finished, this value will change when the poll is finished
                     p.Finished = false;
                     p.CompleteDt = DateTime.Now;
-                    p.Finished = true;
                     //Save new user to the database
                     db.Participant.Add(p);
                     db.SaveChanges();
@@ -419,6 +423,22 @@ namespace LaheyHealth.Controllers
                 var q = dbo.Scores.Where(m => m.Participant.Id == partIcipantId).OrderByDescending(m => m.Score).Take(10).ToList();
                 ResultsViewModel scores = new ResultsViewModel();
                 scores.LstScores = q;
+                //Update the participant
+                SystemContext dbr = new SystemContext();
+                Participant r = dbr.Participant.Where(m => m.Id == partIcipantId).FirstOrDefault();
+                r.Finished = true;
+                r.CompleteDt = DateTime.Now;
+                r.Language = r.Language;
+                try {
+                    dbr.SaveChanges();
+                    dbr.Dispose();
+                }
+                catch (Exception e){
+                    Console.WriteLine(e);
+                }
+                //p.Finished = true;
+                //p.CompleteDt = DateTime.Now;
+                //dbo.SaveChanges();
                 //Return list of scores to the view
                 return View(scores);
             }
@@ -466,7 +486,7 @@ namespace LaheyHealth.Controllers
             HtmlToPdf htmlToPdfConverter = new HtmlToPdf();
             //Set to the highest quality of images possible
             htmlToPdfConverter.Document.ImagesCompression = 0;
-            htmlToPdfConverter.Document.PageOrientation = PdfPageOrientation.Portrait;
+            htmlToPdfConverter.Document.PageOrientation = PdfPageOrientation.Landscape;
             htmlToPdfConverter.Document.PageSize = PdfPageSize.A4;
             htmlToPdfConverter.SerialNumber = @"35e2jo+7-uZO2va2+-rabn8e//-7v/s/+bq-6P/s7vHu-7fHm5ubm";
             // render the HTML code as PDF in memory

@@ -23,7 +23,7 @@ $(document).ready(function () {
             //Perform insertion of information for skill value input
             //Check if the item exists in the array of answers
             var AnswerAux = getItemFromArray(itemId, answers);
-            console.log(answers);
+            //console.log(answers);
             if (AnswerAux != null){
                 //Update answer 
                 AnswerAux.IdSelectedSkill = valueTypeId;
@@ -118,7 +118,7 @@ function areOptionsPreSelected() {
                     //Perform insertion of information for skill value input
                     //Check if the item exists in the array of answers
                     var AnswerAux = getItemFromArray(itemId, answers);
-                    console.log(answers);
+                    //console.log(answers);
                     if (AnswerAux != null) {
                         //Update answer 
                         AnswerAux.IdSelectedSkill = valueTypeId;
@@ -182,9 +182,9 @@ function create_insert_item(typeValue, itemId, create_insert_item, answers) {
 
 //Ajax method that sends answers in for user
 function insertAnswers() {
-    console.log(answers);
+   // console.log(answers);
     lstAnswers = JSON.stringify({ answers : answers });
-    console.log(lstAnswers);
+   // console.log(lstAnswers);
     /*
     var form = $('#antiFT');
     var token = $('input[name="__RequestVerificationToken"]', form).val();
@@ -217,7 +217,10 @@ function insertAnswers() {
 
         },
         error: function (error) {
-            console.log("Error:" + error);
+            $("#next").attr("disabled", false);
+            $("#finish").attr("disabled", false);
+            $('.alert').fadeIn();
+            $('.alert').html("<p> System error, please make sure you are connected to the internet. If problem persists contact system administrator.</p>");
         }
     });
     
@@ -248,7 +251,7 @@ function previousAnswers() {
         },
         error: function (error) {
             error = JSON.stringify({ error: error });
-            console.log("Error:" + error);
+            //console.log("Error:" + error);
         }
     });
 }
