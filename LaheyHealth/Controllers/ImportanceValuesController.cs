@@ -16,12 +16,14 @@ namespace LaheyHealth.Controllers
         private SystemContext db = new SystemContext();
 
         // GET: ImportanceValues
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.ImportanceValues.ToList());
         }
 
         // GET: ImportanceValues/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: ImportanceValues/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View(new ImportanceValuesViewModel());
@@ -47,6 +50,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(ImportanceValuesViewModel importanceViewModel)
         {
             try
@@ -82,6 +86,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: ImportanceValues/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(ImportanceValuesViewModel ivvm)
         {
             try {
@@ -137,6 +143,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: ImportanceValues/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -154,6 +161,7 @@ namespace LaheyHealth.Controllers
         // POST: ImportanceValues/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             ImportanceValues importanceValues = db.ImportanceValues.Find(id);

@@ -16,12 +16,14 @@ namespace LaheyHealth.Controllers
         private SystemContext db = new SystemContext();
 
         // GET: Language
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             return View(await db.Language.ToListAsync());
         }
 
         // GET: Language/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Language/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +50,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([Bind(Include = "Id,Culture,LanguageName")] Language language)
         {
             if (ModelState.IsValid)
@@ -60,6 +64,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Language/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,6 +84,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Culture,LanguageName")] Language language)
         {
             if (ModelState.IsValid)
@@ -91,6 +97,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Language/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -108,6 +115,7 @@ namespace LaheyHealth.Controllers
         // POST: Language/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Language language = await db.Language.FindAsync(id);

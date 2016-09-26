@@ -21,12 +21,14 @@ namespace LaheyHealth.Controllers
         private SystemContext db = new SystemContext();
 
         // GET: Items
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Item.ToList());
         }
 
         // GET: Items/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,6 +44,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Items/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View(new ItemViewModel());
@@ -86,6 +89,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Items/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -118,6 +122,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(ItemViewModel ivm)
         {
             try
@@ -149,6 +154,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -166,6 +172,7 @@ namespace LaheyHealth.Controllers
         // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Item item = db.Item.Find(id);
@@ -406,7 +413,7 @@ namespace LaheyHealth.Controllers
             PPIMessagingHelper.PPIMessaging.PPIMailAddress mail_address = new PPIMessagingHelper.PPIMessaging.PPIMailAddress();
             mail_address.EmailAddress = "noreply@laheyhealth.com";
             mail_address.EmailName = "Lahey Health";
-            PPIMessagingHelper.PPIMessaging.PPIMessagingTools.SendEmail("noreply@laheyhealth.com", email, "", "Result from Leading Forward Competency Assessment", "Download your results for Leading Forward Competency Assesment by clicking on the following link: <a href='"+fileLocation+"'>Download Leading Forward Competency Assessment</a>");
+            PPIMessagingHelper.PPIMessaging.PPIMessagingTools.SendEmail("noreply@laheyhealth.com", email, "", "Result from Leading Forward Competency Assessment", "Download your results for Leading Forward Competency Assessment by clicking on the following link:<br /> <a href='" + fileLocation+"'>Download Leading Forward Competency Assessment</a>");
         }
 
         //Get results for the poll
@@ -501,9 +508,10 @@ namespace LaheyHealth.Controllers
             //Store the file to folder on disc
             MemoryStream ms = new MemoryStream();
             System.IO.File.WriteAllBytes(FilePath + "/" + name, pdfBuffer);
+            var fileNamePDF = System.IO.Path.Combine(FilePath, gN + timeStamp + "laheyQuestionnaire.pdf");
             string fileNameEmail = "";
 
-            fileNameEmail = this.uri(FilePathZip);
+            fileNameEmail = this.uri(fileNamePDF);
             //string requestUrl = this.uri(Request.Url.ToString());
             string requestUrl = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
             //Store string of file location to be used from e-mail send method

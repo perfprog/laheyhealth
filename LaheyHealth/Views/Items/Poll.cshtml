@@ -67,7 +67,7 @@
                             @if (Model.LstSkill.Count > 0)
                             {
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 buttonSelection">
                                     <!-- value type-->
                                     <div class="valueType">
                                         <hr />
@@ -85,7 +85,7 @@
                                             if (Model.lstSkillValueAnswers.Count > 0 && Model.lstSkillValueAnswers[i] == skill.Id)
                                             {
                                                 <!-- if there are answers in the db for this item in the database then set it-->
-                                                <label class="btn btn-default btn-group-lg answer active">
+                                                <label class="btn btn-success btn-group-lg answer active">
                                                     <input class="btn-block" type="radio" autocomplete="off" data-valueType="Skill" name="@item.Id" value="@skill.Id">
                                                     @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
                                                 </label>
@@ -93,7 +93,7 @@
                                             else
                                             {
                                                 <!-- If there are no answers for this item in the database then -->
-                                                <label class="btn btn-default btn-group-lg answer">
+                                                <label class="btn btn-success btn-group-lg answer">
                                                     <input class="btn-block" type="radio" autocomplete="off" data-valueType="Skill" name="@item.Id" value="@skill.Id">
                                                     @Html.DisplayFor(skillItem => skill.Label, Model.LastInsertedAnswer)
                                                 </label>
@@ -105,7 +105,7 @@
                             <!-- check if importance list is not empty, if it isnt show the title and options -->
                             @if (Model.LstImportance.Count > 0)
                             {
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 buttonSelection">
                                     <!-- value type-->
                                     <div class="valueType">
                                         <hr />
@@ -121,14 +121,14 @@
                                         <!-- these will be radio buttons, but for now we will just leave them as texts-->
                                             if (Model.lstImportanceValueAnswers.Count > 0 && Model.lstImportanceValueAnswers[i] == importance.Id)
                                             {
-                                                <label class="btn btn-default btn-group-lg answer active">
+                                                <label class="btn btn-primary btn-group-lg answer active">
                                                     <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="Importance" name="@item.Id" value="@importance.Id">
                                                     @Html.DisplayFor(importanceItem => importance.Label)
                                                 </label>
                                             }
                                             else
                                             {
-                                                <label class="btn btn-default btn-group-lg answer">
+                                                <label class="btn btn-primary btn-group-lg answer">
                                                     <input class="btn-block answer" type="radio" autocomplete="off" data-valueType="Importance" name="@item.Id" value="@importance.Id">
                                                     @Html.DisplayFor(importanceItem => importance.Label)
                                                 </label>
@@ -154,7 +154,10 @@
                 </div>
             </div>
             </div>
-
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: @Model.getPercetageOfQuestionsLeft()%;">
+            </span>
+        </div>
 
         <div class="row">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))

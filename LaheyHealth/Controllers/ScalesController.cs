@@ -15,12 +15,14 @@ namespace LaheyHealth.Controllers
         private SystemContext db = new SystemContext();
 
         // GET: Scales
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Scale.ToList());
         }
 
         // GET: Scales/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Scales/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View(new ScaleViewModel());
@@ -46,6 +49,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(ScaleViewModel scaleViewModel)
         {
             try
@@ -76,6 +80,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Scales/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,6 +105,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(ScaleViewModel scaleViewModel)
         {
             try
@@ -133,6 +139,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: Scales/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -150,6 +157,7 @@ namespace LaheyHealth.Controllers
         // POST: Scales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Scale scale = db.Scale.Find(id);

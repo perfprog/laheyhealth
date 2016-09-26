@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+p{
+    margin:0px;
+    padding:0px;
+}
 
 /***********************
     CUSTOM CSS 
@@ -33,7 +37,7 @@ textarea {
 footer {
     background-color:#62bb46;
     color:#ffffff;
-    min-height:80px;
+    min-height:10px;
 }
 
 footer p{
@@ -85,8 +89,8 @@ h1{
 
 .item{
     color:#4b4b4b;
-    padding-left:25px;
-    margin-top:70px;
+    padding-left:20px;
+    margin-top:20px;
     padding-bottom:10px;
     margin-bottom:0px;
     font-size:20px;
@@ -99,8 +103,8 @@ h1{
 
 
 .valueType{
-    font-size:25px;
-    line-height:7px;
+    font-size:20px;
+    line-height:0px;
 }
 
 
@@ -109,16 +113,16 @@ h1{
     
     width:100%;
     margin: 0 auto;
-    padding-top:10px;
+    padding-top:0px;
     padding-bottom:10px;
-    margin-top:5px;
+    margin-top:0px;
     margin-bottom:30px;
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .btn-block {
-        margin-bottom:5px;
+        margin-bottom:0px;
     }
 
 /*
@@ -155,6 +159,11 @@ h1{
     .item{
         margin-top:10px;
     }
+    
+    .valueType{
+        font-size:25px;
+        line-height:30px;
+    }
 }
 
 .alert{
@@ -169,4 +178,11 @@ h1{
 
 .navbar-collapse.collapse{
     padding-top:15px;
+}
+
+
+.buttonSelection{
+    margin-left:0px;
+    padding-left:0px;
+
 }

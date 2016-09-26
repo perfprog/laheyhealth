@@ -69,7 +69,8 @@ namespace LaheyHealth.Models
         }
 
         public SystemContext() : base("DefaultConnection") { }
+        //public SystemContext() : base("localConnection") { }
 
-        
+
     }
 }

@@ -15,12 +15,14 @@ namespace LaheyHealth.Controllers
         private SystemContext db = new SystemContext();
 
         // GET: SkillValues
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.SkillValues.ToList());
         }
 
         // GET: SkillValues/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: SkillValues/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View(new SkillValuesViewModel());
@@ -46,6 +49,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(SkillValuesViewModel svm)
         {
             try
@@ -78,6 +82,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: SkillValues/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,6 +108,7 @@ namespace LaheyHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(SkillValuesViewModel svm)
         {
             try
@@ -138,6 +144,7 @@ namespace LaheyHealth.Controllers
         }
 
         // GET: SkillValues/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -155,6 +162,7 @@ namespace LaheyHealth.Controllers
         // POST: SkillValues/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             SkillValues skillValues = db.SkillValues.Find(id);
