@@ -1,0 +1,98 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+PPIMessagingHelper
+</name>
+</assembly>
+<members>
+<member name="P:PPIMessagingHelper.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:PPIMessagingHelper.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:PPIMessagingHelper.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.#ctor">
+	<remarks/>
+</member><member name="E:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.TestCompleted">
+	<remarks/>
+</member><member name="E:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.MaxAttachmentSizeCompleted">
+	<remarks/>
+</member><member name="E:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.SendEmailCompleted">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.Test">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.BeginTest(System.AsyncCallback,System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.EndTest(System.IAsyncResult)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.TestAsync">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.TestAsync(System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.MaxAttachmentSize">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.BeginMaxAttachmentSize(System.AsyncCallback,System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.EndMaxAttachmentSize(System.IAsyncResult)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.MaxAttachmentSizeAsync">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.MaxAttachmentSizeAsync(System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.SendEmail(PPIMessagingHelper.PPIMessaging.PPIMailAddress,PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],System.String,System.String,System.Boolean,System.String,System.String,System.String[],System.Byte[][],System.Boolean)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.BeginSendEmail(PPIMessagingHelper.PPIMessaging.PPIMailAddress,PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],System.String,System.String,System.Boolean,System.String,System.String,System.String[],System.Byte[][],System.Boolean,System.AsyncCallback,System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.EndSendEmail(System.IAsyncResult)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.SendEmailAsync(PPIMessagingHelper.PPIMessaging.PPIMailAddress,PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],System.String,System.String,System.Boolean,System.String,System.String,System.String[],System.Byte[][],System.Boolean)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.SendEmailAsync(PPIMessagingHelper.PPIMessaging.PPIMailAddress,PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],PPIMessagingHelper.PPIMessaging.PPIMailAddress[],System.String,System.String,System.Boolean,System.String,System.String,System.String[],System.Byte[][],System.Boolean,System.Object)">
+	<remarks/>
+</member><member name="M:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc.CancelAsync(System.Object)">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.PPIMessagingSvc">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.AuthenticationHeader.UserName">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.AuthenticationHeader.Password">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.AuthenticationHeader.AnyAttr">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.AuthenticationHeader">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.PPIMailAddress.EmailName">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.PPIMailAddress.EmailAddress">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.PPIMailAddress">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.TestCompletedEventHandler">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.TestCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.TestCompletedEventArgs">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.MaxAttachmentSizeCompletedEventHandler">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.MaxAttachmentSizeCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.MaxAttachmentSizeCompletedEventArgs">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.SendEmailCompletedEventHandler">
+	<remarks/>
+</member><member name="P:PPIMessagingHelper.PPIMessaging.SendEmailCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:PPIMessagingHelper.PPIMessaging.SendEmailCompletedEventArgs">
+	<remarks/>
+</member>
+</members>
+</doc>

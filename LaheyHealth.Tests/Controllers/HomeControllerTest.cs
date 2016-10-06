@@ -24,7 +24,7 @@ namespace LaheyHealth.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
-
+        /*
         [TestMethod]
         public void About()
         {
@@ -37,7 +37,8 @@ namespace LaheyHealth.Tests.Controllers
             // Assert
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
-
+        */
+        /*
         [TestMethod]
         public void Contact()
         {
@@ -50,5 +51,6 @@ namespace LaheyHealth.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+        */
     }
 }

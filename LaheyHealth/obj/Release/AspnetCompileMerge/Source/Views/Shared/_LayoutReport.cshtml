@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        body{
+            padding-top:10px;
+            padding-bottom:10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="row">
+            <div class="col-lg-3">
+                <img src="~/images/Lahey_Health_Logo.png" class="img-responsive" alt="Lahey Health Survey" />
+            </div>
+            <div class="col-lg-7">
+                <h2 style="text-align:center;">
+                    Lahey management Needs Analysis
+                </h2>
+                <h3 style="text-align:center;">
+                    Ranked by level of Skill and Importance:
+                </h3>
+            </div>
+            <div class="col-lg-2">
+                @DateTime.Now.ToString("MM/dd/yyyy")
+            </div>
+        </header>
+
+    </div>
+    <hr />
+
+    <div class="container body-content">
+        @RenderBody()
+        <br>
+        @Html.Partial("_Footer_Report")
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/poll")
+    @RenderSection("scripts", required: false)
+
+   
+</body>
+</html>

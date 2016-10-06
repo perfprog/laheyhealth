@@ -1,0 +1,155 @@
+﻿@model LaheyHealth.ViewModels.ResultsViewModel
+
+
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Poll", "SendEmail", FormMethod.Post, new { id = "_CRSFform" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <h2>Results:</h2>
+        <div class="progress" style="width:100%;">
+            <span class="progress-bar progress-bar-success" style="width: 100%;">
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Functionality for sending e-mails set in here -->
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+        <div class="well">
+            <p>
+                <i>
+                    We don't store e-mail information, your e-mail address is discarded after e-mail has been sent with your results.
+                </i>
+            </p>
+
+            <label for="txtEmail">Send Results to E-mail</label>
+            <br>
+            <input type="email" class="form-control" id="txtEmail" name="txtEmail" />
+            <br>
+            <a href="#" class="btn btn-success" id="sendResults">Send E-mail</a>
+            <div class="alert alert-danger">
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>
+                    <b>When you are done with the results page please click on the following button so your information stays private only to you and others can take the questionnaire.</b>
+                </p>
+                @Html.ActionLink("Start new questionnaire", "RestartPoll", "Poll", new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <br><br>
+        <!-- Results table needs to have columns: Item, Subscale, Scale -->
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Subscale
+                </th>
+                <th>
+                    Scale
+                </th>
+            </tr>
+            <!-- For loop of items that will be shown in the view -->
+            @if (Model.lstEmpty())
+            {
+                foreach (var item in Model.LstScores)
+                {
+                    <tr>
+                        <td>
+                            @item.Item.Name
+                        </td>
+                        <td>
+                            @item.Subscale.Name
+                        </td>
+                        <td>
+                            @item.Scale.Name
+                        </td>                     
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="modal fade" id="modalMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Your results will be sent to you shortly</h4>
+                </div>
+                <div class="modal-body">
+                    You will be receiving the reports at the e-mail address provided shortly.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+@section Scripts{ 
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#sendResults").unbind("click");
+            $("#sendResults").on("click", generateReport);
+        });
+
+        function generateReport() {
+            //Get e-mail address
+            var email = $("#txtEmail").val();
+            var token = $('#_CRSFform input[name="__RequestVerificationToken"]').val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            if (validateEmail(email)) {
+                $("#modalMessage").modal('show');
+                email = JSON.stringify({ email: email });
+                $('.alert').fadeOut();
+                
+                $.ajax({
+                    contentType: "application/json; charset=utf-8",
+                    type: "POST",
+                    url: "../Items/SendEmail",
+                    headers: headers,
+                    data: email,
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        
+                    },
+                    error: function (data) {
+                        $('.alert').fadeIn();
+                        $('.alert').html("<p>ERROR - Please try again or contact system administrator.</p>");                        
+                    }
+                });
+            }
+            else {
+                $('.alert').fadeIn();
+                $('.alert').html("<p>Please insert a valid e-mail address.</p>");
+            }
+        }
+</script>
+}
