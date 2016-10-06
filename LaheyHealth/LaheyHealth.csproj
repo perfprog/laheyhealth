@@ -121,6 +121,10 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MvcHaack.Ajax, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcHaack.Ajax.1.1\lib\net40\MvcHaack.Ajax.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NCrontab, Version=2.0.16709.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ncrontab.2.0.0\lib\net20\NCrontab.dll</HintPath>
       <Private>True</Private>
@@ -333,6 +337,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\7tudes_circumplex.png" />
+    <Content Include="images\bar.JPG" />
+    <Content Include="images\bar_yourscore.JPG" />
+    <Content Include="images\bullet.jpg" />
+    <Content Include="images\Cover80.jpg" />
+    <Content Include="images\graph_360.png" />
+    <Content Include="images\graph_self.png" />
+    <Content Include="images\Lahey_Health_Logo.png" />
+    <Content Include="images\normscale_numbers.JPG" />
+    <Content Include="images\ppi_logo.png" />
+    <Content Include="images\results_graph.png" />
+    <Content Include="images\result_background_white.png" />
+    <Content Include="images\sample_graph.JPG" />
+    <Content Include="images\sample_tables.JPG" />
+    <Content Include="images\scorebar.JPG" />
+    <Content Include="images\spacer.JPG" />
+    <Content Include="images\thunderbird_sogm_logo.png" />
+    <Content Include="images\university_of_hartford_logo.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -340,6 +362,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -353,7 +376,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -420,7 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\" />
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>

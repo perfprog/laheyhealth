@@ -6,6 +6,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@using (Html.BeginForm("Poll", "SendEmail", FormMethod.Post, new { id = "_CRSFform" }))
+{
+    @Html.AntiForgeryToken()
+}
+
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <h2>Results:</h2>
@@ -115,6 +121,9 @@
         function generateReport() {
             //Get e-mail address
             var email = $("#txtEmail").val();
+            var token = $('#_CRSFform input[name="__RequestVerificationToken"]').val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
             if (validateEmail(email)) {
                 $("#modalMessage").modal('show');
                 email = JSON.stringify({ email: email });
@@ -124,8 +133,9 @@
                     contentType: "application/json; charset=utf-8",
                     type: "POST",
                     url: "../Items/SendEmail",
-                    datatype: "json",
+                    headers: headers,
                     data: email,
+                    datatype: "json",
                     traditional: true,
                     success: function (data) {
                         

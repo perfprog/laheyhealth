@@ -58,3 +58,6 @@ C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\o
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\obj\Debug\LaheyHealth.Tests.dll
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\obj\Debug\LaheyHealth.Tests.pdb
 C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\bin\Debug\PPIMessagingHelper.dll
+C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\bin\Debug\MvcHaack.Ajax.dll
+C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\bin\Debug\PPIMessagingHelper.pdb
+C:\wamp\www\PPI\projects\Lahey Health Survey\app\laheyhealth\LaheyHealth.Tests\bin\Debug\PPIMessagingHelper.xml

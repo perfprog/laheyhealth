@@ -13,6 +13,7 @@ using PPIMessagingHelper;
 using System.IO;
 using System.IO.Compression;
 using HiQPdf;
+using MvcHaack.Ajax;
 
 namespace LaheyHealth.Controllers
 {
@@ -250,7 +251,7 @@ namespace LaheyHealth.Controllers
         //Post Poll
         //Gets data from ajax call in poll, inserts value and updates the view to show new questions
         [HttpPost, ActionName("Poll")]
-        
+        [MvcHaack.Ajax.ValidateJsonAntiForgeryToken]
         public ActionResult Poll(List<AnswerAux> answers)
         {
             var p = answers;
@@ -404,6 +405,7 @@ namespace LaheyHealth.Controllers
 
         //Send e-mail
         [HttpPost]
+        [MvcHaack.Ajax.ValidateJsonAntiForgeryToken]
         public void SendEmail(string email)
         {
             //Generate report and get link
@@ -411,9 +413,9 @@ namespace LaheyHealth.Controllers
 
             //Build e-mail and send with link for participants to download
             PPIMessagingHelper.PPIMessaging.PPIMailAddress mail_address = new PPIMessagingHelper.PPIMessaging.PPIMailAddress();
-            mail_address.EmailAddress = "noreply@laheyhealth.com";
-            mail_address.EmailName = "Lahey Health";
-            PPIMessagingHelper.PPIMessaging.PPIMessagingTools.SendEmail("noreply@laheyhealth.com", email, "", "Result from Leading Forward Competency Assessment", "Download your results for Leading Forward Competency Assessment by clicking on the following link:<br /> <a href='" + fileLocation+"'>Download Leading Forward Competency Assessment</a>");
+            mail_address.EmailAddress = "surveys@performanceprograms.com";
+            mail_address.EmailName = "surveys@performanceprograms.com";
+            PPIMessagingHelper.PPIMessaging.PPIMessagingTools.SendEmail("surveys@performanceprograms.com", email, "", "Result from Leading Forward Competency Assessment", "Download your results for Leading Forward Competency Assessment by clicking on the following link:<br /> <a href='" + fileLocation+"'>Download Leading Forward Competency Assessment</a>");
         }
 
         //Get results for the poll
